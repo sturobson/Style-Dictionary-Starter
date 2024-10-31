@@ -1,0 +1,36 @@
+
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+$color-primary: #007bff !default;
+$color-secondary: #6c757d !default;
+$spacing-none: 0 !default;
+$spacing-small: 0.5rem !default;
+$spacing-medium: 1rem !default;
+$typography-font-family-body: Roboto, sans-serif !default;
+$typography-font-size-base: 1rem !default;
+$typography-font-size-lg: 1.25rem !default;
+
+$tokens: (
+  'color': (
+    'primary': $color-primary,
+    'secondary': $color-secondary
+  ),
+  'spacing': (
+    'none': $spacing-none,
+    'small': $spacing-small,
+    'medium': $spacing-medium
+  ),
+  'typography': (
+    'font': (
+      'family': (
+        'body': $typography-font-family-body
+      ),
+      'size': (
+        'base': $typography-font-size-base,
+        'lg': $typography-font-size-lg
+      )
+    )
+  )
+);

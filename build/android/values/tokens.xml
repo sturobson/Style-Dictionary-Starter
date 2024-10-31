@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Do not edit directly, this file was auto-generated.
+-->
+<resources>
+  <color name="color_primary">#ff007bff</color>
+  <color name="color_secondary">#ff6c757d</color>
+  <string name="spacing_none">0</string>
+  <string name="spacing_small">0.5rem</string>
+  <string name="spacing_medium">1rem</string>
+  <string name="typography_font_family_body">Roboto, sans-serif</string>
+  <dimen name="typography_font_size_base">16.00sp</dimen>
+  <dimen name="typography_font_size_lg">20.00sp</dimen>
+</resources>
