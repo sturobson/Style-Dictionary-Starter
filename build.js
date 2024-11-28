@@ -1,86 +1,50 @@
 import StyleDictionary from 'style-dictionary';
+import yaml from 'yaml';
+import json5 from 'json5';
+import hjson from 'hjson';
 
+// Register custom parsers for YAML, JSON5, and HJSON
+StyleDictionary.registerParser({
+  name: 'yaml-parser',
+  pattern: /\.ya?ml$/,
+  parser: ({ contents }) => yaml.parse(contents),
+});
+
+StyleDictionary.registerParser({
+  name: 'json5-parser',
+  pattern: /\.json5$/,
+  parser: ({ contents }) => json5.parse(contents),
+});
+
+StyleDictionary.registerParser({
+  name: 'hjson-parser',
+  pattern: /\.hjson$/,
+  parser: ({ contents }) => hjson.parse(contents),
+});
+
+// Configure Style Dictionary
 const myStyleDictionary = new StyleDictionary({
-  source: [`src/tokens/**/*.json`],
+  source: [
+    `src/tokens/**/*.json`,  // JSON (native)
+    `src/tokens/**/*.tokens`,// TOKENS (native)
+    `src/tokens/**/*.yaml`,  // YAML (custom parser)
+    `src/tokens/**/*.json5`, // JSON5 (custom parser)
+    `src/tokens/**/*.hjson`, // HJSON (custom parser)
+  ],
+  parsers: ['yaml-parser', 'json5-parser', 'hjson-parser'], // Custom parsers
   platforms: {
     css: {
       transformGroup: 'css',
       buildPath: 'build/',
       files: [
         {
-          destination: 'variables.css',
+          destination: 'all.css',
           format: 'css/variables',
-        },
-      ],
-    },
-    scss: {
-      transformGroup: 'scss',
-      buildPath: 'build/',
-      files: [
-        {
-          destination: '_variables.scss',
-          format: 'scss/variables',
-        },
-        {
-          destination: 'tokens-map.scss',
-          format: 'scss/map-flat',
-        },
-        {
-          destination: 'tokens-map-deep.scss',
-          format: 'scss/map-deep',
-        },
-      ],
-    },
-    js: {
-      transformGroup: 'js',
-      buildPath: 'build/js/',
-      files: [
-        {
-          destination: 'tokens.js',
-          format: 'javascript/object',
-        },
-        {
-          destination: 'tokens-flat.js',
-          format: 'javascript/module-flat',
-        },
-        {
-          destination: 'tokens-umd.js',
-          format: 'javascript/umd',
-        },
-      ],
-    },
-    ts: {
-      transformGroup: 'js',
-      buildPath: 'build/types/',
-      files: [
-        {
-          destination: 'tokens.d.ts',
-          format: 'typescript/es6-declarations',
-        },
-      ],
-    },
-    android: {
-      transformGroup: 'android',
-      buildPath: 'build/android/',
-      files: [
-        {
-          destination: 'values/tokens.xml',
-          format: 'android/resources',
-        },
-      ],
-    },
-    ios: {
-      transformGroup: 'ios-swift',
-      buildPath: 'build/ios/',
-      files: [
-        {
-          destination: 'Tokens.swift',
-          format: 'ios-swift/class.swift',
-          className: 'Tokens', // Name of the Swift class
         },
       ],
     },
   },
 });
 
+// Build all platforms
 await myStyleDictionary.buildAllPlatforms();

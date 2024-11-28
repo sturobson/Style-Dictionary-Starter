@@ -46,7 +46,7 @@ var _styleDictionary = {
   "spacing": {
     "none": {
       "$value": "0",
-      "filePath": "src/tokens/tokens.json",
+      "filePath": "src/tokens/spacing.json5",
       "isSource": true,
       "$type": "spacing",
       "original": {
@@ -65,7 +65,7 @@ var _styleDictionary = {
     },
     "small": {
       "$value": "0.5rem",
-      "filePath": "src/tokens/tokens.json",
+      "filePath": "src/tokens/spacing.json5",
       "isSource": true,
       "$type": "spacing",
       "original": {
@@ -84,7 +84,7 @@ var _styleDictionary = {
     },
     "medium": {
       "$value": "1rem",
-      "filePath": "src/tokens/tokens.json",
+      "filePath": "src/tokens/spacing.json5",
       "isSource": true,
       "$type": "spacing",
       "original": {
@@ -100,6 +100,25 @@ var _styleDictionary = {
         "spacing",
         "medium"
       ]
+    },
+    "large": {
+      "$value": "2rem",
+      "filePath": "src/tokens/spacing.json5",
+      "isSource": true,
+      "$type": "spacing",
+      "original": {
+        "$value": "2rem",
+        "$type": "spacing"
+      },
+      "name": "SpacingLarge",
+      "attributes": {
+        "category": "spacing",
+        "type": "large"
+      },
+      "path": [
+        "spacing",
+        "large"
+      ]
     }
   },
   "typography": {
@@ -107,7 +126,7 @@ var _styleDictionary = {
       "family": {
         "body": {
           "$value": "Roboto, sans-serif",
-          "filePath": "src/tokens/tokens.json",
+          "filePath": "src/tokens/typography.yaml",
           "isSource": true,
           "$type": "fontFamily",
           "original": {
@@ -126,6 +145,29 @@ var _styleDictionary = {
             "font",
             "family",
             "body"
+          ]
+        },
+        "heading": {
+          "$value": "Arial, sans-serif",
+          "filePath": "src/tokens/typography.yaml",
+          "isSource": true,
+          "$type": "fontFamily",
+          "original": {
+            "$value": "Arial, sans-serif",
+            "$type": "fontFamily"
+          },
+          "name": "TypographyFontFamilyHeading",
+          "attributes": {
+            "category": "typography",
+            "type": "font",
+            "item": "family",
+            "subitem": "heading"
+          },
+          "path": [
+            "typography",
+            "font",
+            "family",
+            "heading"
           ]
         }
       },
@@ -175,7 +217,114 @@ var _styleDictionary = {
             "size",
             "lg"
           ]
+        },
+        "small": {
+          "$value": "0.875rem",
+          "filePath": "src/tokens/typography.yaml",
+          "isSource": true,
+          "$type": "fontSize",
+          "original": {
+            "$value": "0.875rem",
+            "$type": "fontSize"
+          },
+          "name": "TypographyFontSizeSmall",
+          "attributes": {
+            "category": "typography",
+            "type": "font",
+            "item": "size",
+            "subitem": "small"
+          },
+          "path": [
+            "typography",
+            "font",
+            "size",
+            "small"
+          ]
+        },
+        "large": {
+          "$value": "1.25rem",
+          "filePath": "src/tokens/typography.yaml",
+          "isSource": true,
+          "$type": "fontSize",
+          "original": {
+            "$value": "1.25rem",
+            "$type": "fontSize"
+          },
+          "name": "TypographyFontSizeLarge",
+          "attributes": {
+            "category": "typography",
+            "type": "font",
+            "item": "size",
+            "subitem": "large"
+          },
+          "path": [
+            "typography",
+            "font",
+            "size",
+            "large"
+          ]
         }
+      }
+    }
+  },
+  "animation": {
+    "duration": {
+      "short": {
+        "$value": "200ms",
+        "filePath": "src/tokens/animation.hjson",
+        "isSource": true,
+        "original": {
+          "$value": "200ms"
+        },
+        "name": "AnimationDurationShort",
+        "attributes": {
+          "category": "animation",
+          "type": "duration",
+          "item": "short"
+        },
+        "path": [
+          "animation",
+          "duration",
+          "short"
+        ]
+      },
+      "medium": {
+        "$value": "500ms",
+        "filePath": "src/tokens/animation.hjson",
+        "isSource": true,
+        "original": {
+          "$value": "500ms"
+        },
+        "name": "AnimationDurationMedium",
+        "attributes": {
+          "category": "animation",
+          "type": "duration",
+          "item": "medium"
+        },
+        "path": [
+          "animation",
+          "duration",
+          "medium"
+        ]
+      },
+      "long": {
+        "$value": "1000ms",
+        "filePath": "src/tokens/animation.hjson",
+        "isSource": true,
+        "original": {
+          "$value": "1000ms"
+        },
+        "name": "AnimationDurationLong",
+        "attributes": {
+          "category": "animation",
+          "type": "duration",
+          "item": "long"
+        },
+        "path": [
+          "animation",
+          "duration",
+          "long"
+        ]
       }
     }
   }

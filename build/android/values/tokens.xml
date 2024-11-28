@@ -9,7 +9,14 @@
   <string name="spacing_none">0</string>
   <string name="spacing_small">0.5rem</string>
   <string name="spacing_medium">1rem</string>
+  <string name="spacing_large">2rem</string>
   <string name="typography_font_family_body">Roboto, sans-serif</string>
+  <string name="typography_font_family_heading">Arial, sans-serif</string>
   <dimen name="typography_font_size_base">16.00sp</dimen>
   <dimen name="typography_font_size_lg">20.00sp</dimen>
+  <dimen name="typography_font_size_small">14.00sp</dimen>
+  <dimen name="typography_font_size_large">20.00sp</dimen>
+  <string name="animation_duration_short">200ms</string>
+  <string name="animation_duration_medium">500ms</string>
+  <string name="animation_duration_long">1000ms</string>
 </resources>

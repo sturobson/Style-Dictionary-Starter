@@ -28,5 +28,10 @@
   "homepage": "https://github.com/sturobson/Style-Dictionary-Starter#readme",
   "devDependencies": {
     "style-dictionary": "^4.1.4"
+  },
+  "dependencies": {
+    "hjson": "^3.2.2",
+    "json5": "^2.2.3",
+    "yaml": "^2.6.1"
   }
 }

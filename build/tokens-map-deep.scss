@@ -8,9 +8,16 @@ $color-secondary: #6c757d !default;
 $spacing-none: 0 !default;
 $spacing-small: 0.5rem !default;
 $spacing-medium: 1rem !default;
+$spacing-large: 2rem !default;
 $typography-font-family-body: Roboto, sans-serif !default;
+$typography-font-family-heading: Arial, sans-serif !default;
 $typography-font-size-base: 1rem !default;
 $typography-font-size-lg: 1.25rem !default;
+$typography-font-size-small: 0.875rem !default;
+$typography-font-size-large: 1.25rem !default;
+$animation-duration-short: 200ms !default;
+$animation-duration-medium: 500ms !default;
+$animation-duration-long: 1000ms !default;
 
 $tokens: (
   'color': (
@@ -20,17 +27,28 @@ $tokens: (
   'spacing': (
     'none': $spacing-none,
     'small': $spacing-small,
-    'medium': $spacing-medium
+    'medium': $spacing-medium,
+    'large': $spacing-large
   ),
   'typography': (
     'font': (
       'family': (
-        'body': $typography-font-family-body
+        'body': $typography-font-family-body,
+        'heading': $typography-font-family-heading
       ),
       'size': (
         'base': $typography-font-size-base,
-        'lg': $typography-font-size-lg
+        'lg': $typography-font-size-lg,
+        'small': $typography-font-size-small,
+        'large': $typography-font-size-large
       )
+    )
+  ),
+  'animation': (
+    'duration': (
+      'short': $animation-duration-short,
+      'medium': $animation-duration-medium,
+      'long': $animation-duration-long
     )
   )
 );
