@@ -1,8 +1,0 @@
-typography:
-  font:
-    family:
-      body: { $value: "Roboto, sans-serif" }
-      heading: { $value: "Arial, sans-serif" }
-    size:
-      small: { $value: "0.875rem" }
-      large: { $value: "1.25rem" }

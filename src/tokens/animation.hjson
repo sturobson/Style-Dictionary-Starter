@@ -1,9 +1,0 @@
-{
-  animation: {
-    duration: {
-      short: { $value: "200ms" },
-      medium: { $value: "500ms" },
-      long: { $value: "1000ms" }
-    }
-  }
-}

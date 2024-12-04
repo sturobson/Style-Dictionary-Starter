@@ -1,8 +1,0 @@
-{
-  spacing: {
-    none: { $value: "0" },
-    small: { $value: "0.5rem" },
-    medium: { $value: "1rem" },
-    large: { $value: "2rem" }
-  }
-}
