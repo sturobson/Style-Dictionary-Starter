@@ -1,0 +1,29 @@
+{
+  "spacing": {
+    "xs": {
+      "$value": ".25rem",
+      "$type": "dimension",
+      "description": "Extra small spacing for minimal separations or fine-tuned padding."
+    },
+    "s": {
+      "$value": ".5rem",
+      "$type": "dimension",
+      "description": "Small spacing for compact padding or margins."
+    },
+    "m": {
+      "$value": "1rem",
+      "$type": "dimension",
+      "description": "Medium spacing for comfortable padding or margins."
+    },
+    "l": {
+      "$value": "1.5rem",
+      "$type": "dimension",
+      "description": "Large spacing for larger separations in layouts."
+    },
+    "xl": {
+      "$value": "2rem",
+      "$type": "dimension",
+      "description": "Extra large spacing for wide separations or white space."
+    }
+  },
+}

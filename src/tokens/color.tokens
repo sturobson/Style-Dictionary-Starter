@@ -1,0 +1,20 @@
+{
+  
+  "color": {
+    "primary": {
+      "$value": "#ff5733",
+      "$type": "color",
+      "description": "Primary brand color used for buttons and links."
+    },
+    "secondary": {
+      "$value": "#33c1ff",
+      "$type": "color",
+      "description": "Secondary brand color used for accents and highlights."
+    },
+    "tertiary": {
+      "$value": "#75ff33",
+      "$type": "color",
+      "description": "Tertiary brand color used for backgrounds or subtle elements."
+    }
+  }
+}
