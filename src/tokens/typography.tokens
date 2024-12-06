@@ -1,0 +1,28 @@
+{
+  "typography": {
+    "fontSize": {
+      "small": {
+        "$value": "12px",
+        "$type": "dimension"
+      },
+      "medium": {
+        "$value": "16px",
+        "$type": "dimension"
+      },
+      "large": {
+        "$value": "24px",
+        "$type": "dimension"
+      }
+    },
+    "fontWeight": {
+      "regular": {
+        "$value": "400",
+        "$type": "number"
+      },
+      "bold": {
+        "$value": "700",
+        "$type": "number"
+      }
+    }
+  }
+}

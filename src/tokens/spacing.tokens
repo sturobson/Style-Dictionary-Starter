@@ -1,29 +1,24 @@
 {
   "spacing": {
     "xs": {
-      "$value": ".25rem",
-      "$type": "dimension",
-      "description": "Extra small spacing for minimal separations or fine-tuned padding."
+      "$value": "4px",
+      "$type": "dimension"
     },
-    "s": {
-      "$value": ".5rem",
-      "$type": "dimension",
-      "description": "Small spacing for compact padding or margins."
+    "sm": {
+      "$value": "8px",
+      "$type": "dimension"
     },
-    "m": {
-      "$value": "1rem",
-      "$type": "dimension",
-      "description": "Medium spacing for comfortable padding or margins."
+    "md": {
+      "$value": "16px",
+      "$type": "dimension"
     },
-    "l": {
-      "$value": "1.5rem",
-      "$type": "dimension",
-      "description": "Large spacing for larger separations in layouts."
+    "lg": {
+      "$value": "32px",
+      "$type": "dimension"
     },
     "xl": {
-      "$value": "2rem",
-      "$type": "dimension",
-      "description": "Extra large spacing for wide separations or white space."
+      "$value": "64px",
+      "$type": "dimension"
     }
-  },
+  }
 }

@@ -1,0 +1,20 @@
+{
+  "radius": {
+    "none": {
+      "$value": "0px",
+      "$type": "dimension"
+    },
+    "small": {
+      "$value": "4px",
+      "$type": "dimension"
+    },
+    "medium": {
+      "$value": "8px",
+      "$type": "dimension"
+    },
+    "large": {
+      "$value": "16px",
+      "$type": "dimension"
+    }
+  }
+}
