@@ -1,0 +1,42 @@
+{
+	"color": {
+		"red": {
+			"100": {
+				"$value": "#ffe5e5",
+				"$type": "color"
+			},
+			"200": {
+				"$value": "#ffb3b3",
+				"$type": "color"
+			},
+			"300": {
+				"$value": "#ff8080",
+				"$type": "color"
+			},
+			"400": {
+				"$value": "#ff0000",
+				"$type": "color"
+			},
+			"500": {
+				"$value": "#ff4d4d",
+				"$type": "color"
+			},
+			"500": {
+				"$value": "#e60000",
+				"$type": "color"
+			},
+			"600": {
+				"$value": "#cc0000",
+				"$type": "color"
+			},
+			"700": {
+				"$value": "#990000",
+				"$type": "color"
+			},
+			"800": {
+				"$value": "#660000",
+				"$type": "color"
+			}
+		}
+	}
+}

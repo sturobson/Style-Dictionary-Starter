@@ -1,0 +1,10 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --padding-small: var(--spacing-200);
+  --padding-medium: var(--spacing-400);
+  --padding-large: var(--spacing-600);
+  --padding-extra-large: var(--spacing-800);
+}

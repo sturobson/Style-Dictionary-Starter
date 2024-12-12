@@ -1,0 +1,20 @@
+{
+  "padding": {
+    "small": {
+      "$value": "{spacing.200}",
+      "$type": "dimension"
+    },
+    "medium": {
+      "$value": "{spacing.400}",
+      "$type": "dimension"
+    },
+    "large": {
+      "$value": "{spacing.600}",
+      "$type": "dimension"
+    },
+    "extra-large": {
+      "$value": "{spacing.800}",
+      "$type": "dimension"
+    }
+  }
+}
