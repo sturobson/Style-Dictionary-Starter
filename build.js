@@ -1,27 +1,26 @@
+import { globSync } from 'glob';
+import path from 'path';
 import StyleDictionary from 'style-dictionary';
 
-// Configure Style Dictionary
-const myStyleDictionary = new StyleDictionary({
-  source: ['src/tokens/**/*.tokens'],
+const tokenFiles = globSync('src/tokens/**/*.tokens');
 
+const myStyleDictionary = new StyleDictionary({
+  source: tokenFiles,
   platforms: {
     css: {
       transformGroup: 'css',
-      // Resolve references to generate hard values
-      resolveReferences: true,
       buildPath: 'build/css/',
-      files: [
-        {
-          destination: 'base/tokens.css', // Output file for base tokens
+      files: tokenFiles.map((file) => {
+        const relativeFilePath = path.relative('src/tokens', file).replace(/\\/g, '/');
+        return {
+          destination: relativeFilePath.replace('.tokens', '.css'),
           format: 'css/variables',
-          filter: (token) => token.filePath.includes('base'), // Filter for base tokens
-        },
-        {
-          destination: 'semantic/tokens.css', // Output file for semantic tokens
-          format: 'css/variables',
-          filter: (token) => token.filePath.includes('semantic'), // Filter for semantic tokens
-        },
-      ],
+          filter: (token) => token.filePath.endsWith(relativeFilePath),
+          options: {
+            outputReferences: file.includes('semantic'),
+          },
+        };
+      }),
     },
   },
 });

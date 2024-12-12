@@ -3,5 +3,5 @@
  */
 
 :root {
-  --color-warning: #ff0000;
+  --color-warning: var(--color-red-400);
 }
