@@ -1,0 +1,26 @@
+{
+  "color": {
+    "background": {
+      "$value": "{color.base.gray.500}",
+      "$type": "color",
+      "$description": "Background color for dark mode."
+    },
+    "text": {
+      "$value": "{color.base.white}",
+      "$type": "color",
+      "$description": "Text color for dark mode."
+    },
+    "card": {
+      "background": {
+        "$value": "{color.base.gray.800}",
+        "$type": "color",
+        "$description": "Background color for cards in dark mode."
+      },
+      "border": {
+        "$value": "{color.base.gray.500}",
+        "$type": "color",
+        "$description": "Border color for cards in dark mode."
+      }
+    }
+  }
+}

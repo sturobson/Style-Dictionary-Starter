@@ -1,0 +1,60 @@
+{
+  "color": {
+    "base": {
+      "white": {
+        "$value": "#FFFFFF",
+        "$type": "color"
+      },
+      "black": {
+        "$value": "#000000",
+        "$type": "color"
+      },
+      "gray": {
+        "100": {
+          "$value": "#F7F7F7",
+          "$type": "color"
+        },
+        "200": {
+          "$value": "#E1E1E1",
+          "$type": "color"
+        },
+        "300": {
+          "$value": "#CFCFCF",
+          "$type": "color"
+        },
+        "400": {
+          "$value": "#B3B3B3",
+          "$type": "color"
+        },
+        "500": {
+          "$value": "#A0A0A0",
+          "$type": "color"
+        },
+        "600": {
+          "$value": "#7D7D7D",
+          "$type": "color"
+        },
+        "700": {
+          "$value": "#5A5A5A",
+          "$type": "color"
+        },
+        "800": {
+          "$value": "#3D3D3D",
+          "$type": "color"
+        },
+        "900": {
+          "$value": "#1A1A1A",
+          "$type": "color"
+        }
+      },
+      "primary": {
+        "$value": "#007BFF",
+        "$type": "color"
+      },
+      "secondary": {
+        "$value": "#6C757D",
+        "$type": "color"
+      }
+    }
+  }
+}

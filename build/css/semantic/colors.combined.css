@@ -1,0 +1,22 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --color-background: var(--color-base-gray-500);
+  --color-text: var(--color-base-white);
+  --color-card-background: var(--color-base-gray-800);
+  --color-card-border: var(--color-base-gray-500);
+  --button-background-primary: var(--color-base-primary);
+  --button-background-secondary: var(--color-base-secondary);
+  --button-text: var(--color-base-white);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+  --color-background: var(--color-base-gray-500);
+  --color-text: var(--color-base-white);
+  --color-card-background: var(--color-base-gray-800);
+  --color-card-border: var(--color-base-gray-500);
+  }
+}

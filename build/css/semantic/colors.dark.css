@@ -1,0 +1,12 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+  --color-background: var(--color-base-gray-500);
+  --color-text: var(--color-base-white);
+  --color-card-background: var(--color-base-gray-800);
+  --color-card-border: var(--color-base-gray-500);
+  }
+}

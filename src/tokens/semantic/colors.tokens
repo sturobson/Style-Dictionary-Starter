@@ -1,0 +1,45 @@
+{
+  "color": {
+    "background": {
+      "$value": "{color.base.white}",
+      "$type": "color",
+      "$description": "Background color for light mode."
+    },
+    "text": {
+      "$value": "{color.base.black}",
+      "$type": "color",
+      "$description": "Text color for light mode."
+    },
+    "card": {
+      "background": {
+        "$value": "{color.base.gray.200}",
+        "$type": "color",
+        "$description": "Background color for cards in light mode."
+      },
+      "border": {
+        "$value": "{color.base.gray.600}",
+        "$type": "color",
+        "$description": "Border color for cards in light mode."
+      }
+    }
+  },
+  "button": {
+    "background": {
+      "primary": {
+        "$value": "{color.base.primary}",
+        "$type": "color",
+        "$description": "Primary button background color in dark mode."
+      },
+      "secondary": {
+        "$value": "{color.base.secondary}",
+        "$type": "color",
+        "$description": "Secondary button background color in dark mode."
+      }
+    },
+    "text": {
+      "$value": "{color.base.white}",
+      "$type": "color",
+      "$description": "Text color for buttons in dark mode."
+    }
+  }
+}

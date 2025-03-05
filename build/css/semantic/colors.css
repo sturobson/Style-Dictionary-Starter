@@ -1,0 +1,13 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --color-background: var(--color-base-gray-500); /* Background color for dark mode. */
+  --color-text: var(--color-base-white); /* Text color for dark mode. */
+  --color-card-background: var(--color-base-gray-800); /* Background color for cards in dark mode. */
+  --color-card-border: var(--color-base-gray-500); /* Border color for cards in dark mode. */
+  --button-background-primary: var(--color-base-primary); /* Primary button background color in dark mode. */
+  --button-background-secondary: var(--color-base-secondary); /* Secondary button background color in dark mode. */
+  --button-text: var(--color-base-white); /* Text color for buttons in dark mode. */
+}
