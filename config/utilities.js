@@ -1,0 +1,68 @@
+// config/utilities.js
+export const utilities = [
+  {
+    'name': 'padding',
+    'tokenType': 'spacing',
+    'CSSprop': 'padding'
+  },
+  {
+    'name': 'padding-left',
+    'tokenType': 'spacing',
+    'CSSprop': 'padding-left'
+  },
+  {
+    'name': 'padding-right',
+    'tokenType': 'spacing',
+    'CSSprop': 'padding-right'
+  },
+  {
+    'name': 'padding-top',
+    'tokenType': 'spacing',
+    'CSSprop': 'padding-top'
+  },
+  {
+    'name': 'padding-bottom',
+    'tokenType': 'spacing',
+    'CSSprop': 'padding-bottom'
+  },
+  {
+    'name': 'margin',
+    'tokenType': 'spacing',
+    'CSSprop': 'margin'
+  },
+  {
+    'name': 'margin-left',
+    'tokenType': 'spacing',
+    'CSSprop': 'margin-left'
+  },
+  {
+    'name': 'margin-right',
+    'tokenType': 'spacing',
+    'CSSprop': 'margin-right'
+  },
+  {
+    'name': 'margin-top',
+    'tokenType': 'spacing',
+    'CSSprop': 'margin-top'
+  },
+  {
+    'name': 'margin-bottom',
+    'tokenType': 'spacing',
+    'CSSprop': 'margin-bottom'
+  },
+  {
+    'name': 'gap',
+    'tokenType': 'spacing',
+    'CSSprop': 'gap'
+  },
+  {
+    'name': 'column-gap',
+    'tokenType': 'spacing',
+    'CSSprop': 'column-gap'
+  },
+  {
+    'name': 'row-gap',
+    'tokenType': 'spacing',
+    'CSSprop': 'row-gap'
+  },
+];
