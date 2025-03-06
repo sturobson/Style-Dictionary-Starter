@@ -26,16 +26,7 @@ const myStyleDictionary = new StyleDictionary({
       files: [
         {
           destination: 'colors.css',
-          format: 'css/variables',
-          filter: (token) => token.filePath.includes('semantic'),
-          options: {
-            outputReferences: true,
-          },
-        },
-        {
-          destination: 'colors.dark.css',
-          format: 'css/variables-dark',
-          filter: (token) => token.filePath.includes('semantic') && token.filePath.includes('dark'),
+          format: 'css/variables-combined',
           options: {
             outputReferences: true,
           },
@@ -46,22 +37,31 @@ const myStyleDictionary = new StyleDictionary({
   },
 });
 
-StyleDictionary.hooks.formats['css/variables-dark'] = function({ dictionary, options }) {
-  const { outputReferences } = options;
+// Register a new format for combined light and dark mode CSS
+StyleDictionary.hooks.formats['css/variables-combined'] = function({ dictionary, options }) {
+  const semanticTokens = dictionary.allTokens.filter(token => 
+    token.filePath.includes('semantic')
+  );
   const darkTokens = dictionary.allTokens.filter(token => 
     token.filePath.includes('semantic') && token.filePath.includes('dark')
   );
-
-  const tokens = darkTokens.map((token) => {
-    const { name } = token;
+  const semanticVariables = semanticTokens.map((token) => {
+    const { name, comment } = token;
+    const description = token.original.$description;
     const baseVariableName = token.original['$value'].replace(/^\{|\}$/g, ''); // Remove curly braces
     const cssVariableName = `var(--${baseVariableName.replace(/\./g, '-').replace(/_/g, '-')})`;
-    const description = token.original.$description;
     return `  --${name}: ${cssVariableName};${description ? ` /* ${description} */` : ''}`;
   }).join('\n');
-  return `${HEADER_COMMENT}@media (prefers-color-scheme: dark) {\n  :root {\n${tokens}\n  }\n}`;
+  const darkVariables = darkTokens.map((token) => {
+    const { name, comment } = token;
+    const description = token.original.$description;
+    const baseVariableName = token.original['$value'].replace(/^\{|\}$/g, ''); // Remove curly braces
+    const cssVariableName = `var(--${baseVariableName.replace(/\./g, '-').replace(/_/g, '-')})`;
+    return `  --${name}: ${cssVariableName};${description ? ` /* ${description} */` : ''}`;
+  }).join('\n');
+  
+  return `${HEADER_COMMENT}:root {\n${semanticVariables}\n}\n\n@media (prefers-color-scheme: dark) {\n  :root {\n${darkVariables}\n  }\n}`;
 };
-
 
 
 myStyleDictionary.buildAllPlatforms();
