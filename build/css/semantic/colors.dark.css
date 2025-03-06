@@ -4,9 +4,9 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-  --color-background: var(--color-base-gray-500);
-  --color-text: var(--color-base-white);
-  --color-card-background: var(--color-base-gray-800);
-  --color-card-border: var(--color-base-gray-500);
+  --color-background: var(--color-base-gray-500); /* Background color for dark mode. */
+  --color-text: var(--color-base-white); /* Text color for dark mode. */
+  --color-card-background: var(--color-base-gray-800); /* Background color for cards in dark mode. */
+  --color-card-border: var(--color-base-gray-500); /* Border color for cards in dark mode. */
   }
 }
