@@ -22,7 +22,7 @@ const myStyleDictionary = new StyleDictionary({
     },
     css_semantic: {
       transformGroup: 'css',
-      buildPath: 'build/css/semantic/',
+      buildPath: 'build/css/combined/',
       files: [
         {
           destination: 'colors.css',
@@ -39,28 +39,34 @@ const myStyleDictionary = new StyleDictionary({
 
 // Register a new format for combined light and dark mode CSS
 StyleDictionary.hooks.formats['css/variables-combined'] = function({ dictionary, options }) {
-  const semanticTokens = dictionary.allTokens.filter(token => 
-    token.filePath.includes('semantic')
-  );
-  const darkTokens = dictionary.allTokens.filter(token => 
-    token.filePath.includes('semantic') && token.filePath.includes('dark')
-  );
-  const semanticVariables = semanticTokens.map((token) => {
-    const { name, comment } = token;
-    const description = token.original.$description;
-    const baseVariableName = token.original['$value'].replace(/^\{|\}$/g, ''); // Remove curly braces
-    const cssVariableName = `var(--${baseVariableName.replace(/\./g, '-').replace(/_/g, '-')})`;
-    return `  --${name}: ${cssVariableName};${description ? ` /* ${description} */` : ''}`;
-  }).join('\n');
-  const darkVariables = darkTokens.map((token) => {
-    const { name, comment } = token;
-    const description = token.original.$description;
-    const baseVariableName = token.original['$value'].replace(/^\{|\}$/g, ''); // Remove curly braces
-    const cssVariableName = `var(--${baseVariableName.replace(/\./g, '-').replace(/_/g, '-')})`;
-    return `  --${name}: ${cssVariableName};${description ? ` /* ${description} */` : ''}`;
-  }).join('\n');
+  const { outputReferences } = options;
   
-  return `${HEADER_COMMENT}:root {\n${semanticVariables}\n}\n\n@media (prefers-color-scheme: dark) {\n  :root {\n${darkVariables}\n  }\n}`;
+  // Extract semantic tokens
+  const semanticTokens = dictionary.allTokens.filter(token => 
+    token.filePath.includes('combined')
+  );
+
+  const lightVariables = semanticTokens.map((token) => {
+    const { name, comment } = token;
+    const description = token.original.$description;
+    const baseVariableName = token.original['$value'].replace(/^\{|\}$/g, ''); // Remove curly braces
+    const cssVariableName = `var(--${baseVariableName.replace(/\./g, '-').replace(/_/g, '-')})`;
+    return `  --${name}: ${cssVariableName};${description ? ` /* ${description} */` : ''}`;
+  }).join('\n');
+
+  const darkVariables = semanticTokens.map((token) => {
+    const { name, comment } = token;
+    const description = token.original.$description;
+    const darkModeValue = token.original.$mods?.dark; // Access dark mode value
+    if (darkModeValue) {
+      const baseVariableName = darkModeValue.replace(/^\{|\}$/g, ''); // Remove curly braces
+      const cssVariableName = `var(--${baseVariableName.replace(/\./g, '-').replace(/_/g, '-')})`;
+      return `  --${name}: ${cssVariableName};${description ? ` /* ${description} */` : ''}`;
+    }
+    return '';
+  }).filter(Boolean).join('\n'); // Filter out any undefined dark mode variables
+  
+  return `${HEADER_COMMENT}:root {\n${lightVariables}\n}\n\n@media (prefers-color-scheme: dark) {\n  :root {\n${darkVariables}\n  }\n}`;
 };
 
 
