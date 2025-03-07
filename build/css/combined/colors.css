@@ -13,10 +13,17 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root  {
   --color-background: var(--color-base-black); /* Background color for light mode. */
   --color-text: var(--color-base-white); /* Text color for light mode. */
   --color-card-background: var(--color-base-gray-800); /* Background color for cards in light mode. */
   --color-card-border: var(--color-base-gray-400); /* Border color for cards in light mode. */
   }
+}
+
+[data-mode='dark'], .mode-dark {
+  --color-background: var(--color-base-black); /* Background color for light mode. */
+  --color-text: var(--color-base-white); /* Text color for light mode. */
+  --color-card-background: var(--color-base-gray-800); /* Background color for cards in light mode. */
+  --color-card-border: var(--color-base-gray-400); /* Border color for cards in light mode. */
 }

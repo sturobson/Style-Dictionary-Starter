@@ -20,55 +20,46 @@ const myStyleDictionary = new StyleDictionary({
         },
       ],
     },
-    css_semantic: {
+    css_themed: {
       transformGroup: 'css',
       buildPath: 'build/css/combined/',
       files: [
         {
           destination: 'colors.css',
-          format: 'css/variables-combined',
-          options: {
-            outputReferences: true,
-          },
+          format: 'css/variables-themed',
         },
       ],
     },
-    
   },
 });
 
-// Register a new format for combined light and dark mode CSS
-StyleDictionary.hooks.formats['css/variables-combined'] = function({ dictionary, options }) {
-  const { outputReferences } = options;
-  
+// Register a new format for themed CSS
+StyleDictionary.hooks.formats['css/variables-themed'] = function({ dictionary }) {
   // Extract semantic tokens
   const semanticTokens = dictionary.allTokens.filter(token => 
     token.filePath.includes('combined')
   );
 
-  const lightVariables = semanticTokens.map((token) => {
-    const { name, comment } = token;
+  // Generate CSS variables for light and dark modes
+  const variables = semanticTokens.map((token) => {
+    const { name } = token;
     const description = token.original.$description;
     const baseVariableName = token.original['$value'].replace(/^\{|\}$/g, ''); // Remove curly braces
-    const cssVariableName = `var(--${baseVariableName.replace(/\./g, '-').replace(/_/g, '-')})`;
-    return `  --${name}: ${cssVariableName};${description ? ` /* ${description} */` : ''}`;
-  }).join('\n');
-
-  const darkVariables = semanticTokens.map((token) => {
-    const { name, comment } = token;
-    const description = token.original.$description;
+    const lightCssVariableName = `var(--${baseVariableName.replace(/\./g, '-').replace(/_/g, '-')})`;
     const darkModeValue = token.original.$mods?.dark; // Access dark mode value
-    if (darkModeValue) {
-      const baseVariableName = darkModeValue.replace(/^\{|\}$/g, ''); // Remove curly braces
-      const cssVariableName = `var(--${baseVariableName.replace(/\./g, '-').replace(/_/g, '-')})`;
-      return `  --${name}: ${cssVariableName};${description ? ` /* ${description} */` : ''}`;
-    }
-    return '';
-  }).filter(Boolean).join('\n'); // Filter out any undefined dark mode variables
-  
-  return `${HEADER_COMMENT}:root {\n${lightVariables}\n}\n\n@media (prefers-color-scheme: dark) {\n  :root {\n${darkVariables}\n  }\n}`;
-};
+    const darkCssVariableName = darkModeValue ? `var(--${darkModeValue.replace(/^\{|\}$/g, '').replace(/\./g, '-').replace(/_/g, '-')})` : null;
 
+    return {
+      light: `  --${name}: ${lightCssVariableName};${description ? ` /* ${description} */` : ''}`,
+      dark: darkCssVariableName ? `  --${name}: ${darkCssVariableName};${description ? ` /* ${description} */` : ''}` : null,
+    };
+  });
+
+  const lightVariables = variables.map(v => v.light).join('\n');
+  const darkVariables = variables.map(v => v.dark).filter(Boolean).join('\n'); // Filter out any undefined dark mode variables
+
+  return `${HEADER_COMMENT}:root {\n${lightVariables}\n}\n\n@media (prefers-color-scheme: dark) {\n  :root  {\n${darkVariables}\n  }\n}\n\n[data-mode='dark'], .mode-dark {\n${darkVariables}\n}`;
+};
 
 myStyleDictionary.buildAllPlatforms();
 console.log('Build completed!');
