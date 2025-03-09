@@ -3,27 +3,11 @@
  */
 
 :root {
-  --color-background: var(--color-base-white); /* Background color for light mode. */
-  --color-text: var(--color-base-black); /* Text color for light mode. */
-  --color-card-background: var(--color-base-gray-200); /* Background color for cards in light mode. */
-  --color-card-border: var(--color-base-gray-600); /* Border color for cards in light mode. */
-  --button-background-primary: var(--color-base-primary); /* Primary button background color in dark mode. */
-  --button-background-secondary: var(--color-base-secondary); /* Secondary button background color in dark mode. */
-  --button-text: var(--color-base-white); /* Text color for buttons in dark mode. */
-}
-
-@media (prefers-color-scheme: dark) {
-  :root  {
-  --color-background: var(--color-base-black); /* Background color for light mode. */
-  --color-text: var(--color-base-white); /* Text color for light mode. */
-  --color-card-background: var(--color-base-gray-800); /* Background color for cards in light mode. */
-  --color-card-border: var(--color-base-gray-400); /* Border color for cards in light mode. */
-  }
-}
-
-[data-mode='dark'], .mode-dark {
-  --color-background: var(--color-base-black); /* Background color for light mode. */
-  --color-text: var(--color-base-white); /* Text color for light mode. */
-  --color-card-background: var(--color-base-gray-800); /* Background color for cards in light mode. */
-  --color-card-border: var(--color-base-gray-400); /* Border color for cards in light mode. */
+  --color-background: light-dark(var(--color-base-white), var(--color-base-black));
+  --color-text: light-dark(var(--color-base-black), var(--color-base-white));
+  --color-card-background: light-dark(var(--color-base-gray-200), var(--color-base-gray-800));
+  --color-card-border: light-dark(var(--color-base-gray-600), var(--color-base-gray-400));
+  --button-background-primary: var(--color-base-primary);
+  --button-background-secondary: var(--color-base-secondary);
+  --button-text: var(--color-base-white);
 }
