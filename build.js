@@ -1,3 +1,5 @@
+// script for light-dark() attribute in CSS
+
 import { globSync } from 'glob';
 import StyleDictionary from 'style-dictionary';
 
@@ -49,16 +51,14 @@ StyleDictionary.hooks.formats['css/variables-themed'] = function({ dictionary })
     const darkModeValue = token.original.$mods?.dark; // Access dark mode value
     const darkCssVariableName = darkModeValue ? `var(--${darkModeValue.replace(/^\{|\}$/g, '').replace(/\./g, '-').replace(/_/g, '-')})` : null;
 
-    return {
-      light: `  --${name}: ${lightCssVariableName};${description ? ` /* ${description} */` : ''}`,
-      dark: darkCssVariableName ? `  --${name}: ${darkCssVariableName};${description ? ` /* ${description} */` : ''}` : null,
-    };
-  });
+    if (darkCssVariableName) {
+      return `  --${name}: light-dark(${lightCssVariableName}, ${darkCssVariableName});`;
+    } else {
+      return `  --${name}: ${lightCssVariableName};`;
+    }
+  }).join('\n');
 
-  const lightVariables = variables.map(v => v.light).join('\n');
-  const darkVariables = variables.map(v => v.dark).filter(Boolean).join('\n'); // Filter out any undefined dark mode variables
-
-  return `${HEADER_COMMENT}:root {\n${lightVariables}\n}\n\n@media (prefers-color-scheme: dark) {\n  :root  {\n${darkVariables}\n  }\n}\n\n[data-mode='dark'], .mode-dark {\n${darkVariables}\n}`;
+  return `${HEADER_COMMENT}:root {\n${variables}\n}`;
 };
 
 myStyleDictionary.buildAllPlatforms();
