@@ -17,6 +17,7 @@ Each article is structured as its own branch in this repository.
 5. [Organising Outputs with Style Dictionary](https://www.alwaystwisted.com/articles/a-design-tokens-workflow-part-5)
 6. [Layers: Referencing Tokens in Style Dictionary](https://www.alwaystwisted.com/articles/a-design-tokens-workflow-part-6)
 7. [Implementing Light and Dark Mode with Style Dictionary](https://www.alwaystwisted.com/articles/a-design-tokens-workflow-part-7)
+7. [Implementing Light and Dark Mode with Style Dictionary (part 2)](https://www.alwaystwisted.com/articles/a-design-tokens-workflow-part-8)
 
 ## Branches
 
@@ -26,6 +27,5 @@ Each article is structured as its own branch in this repository.
 4. [Converting Tokens with Style Dictionary](https://github.com/sturobson/Style-Dictionary-Starter/tree/04-converting-tokens)
 5. [Organising Outputs with Style Dictionary](https://github.com/sturobson/Style-Dictionary-Starter/tree/05-organising-outputs)
 6. [Layers: Referencing Tokens in Style Dictionary](https://github.com/sturobson/Style-Dictionary-Starter/tree/06-creating-layers)
-7. [Implementing Light and Dark Mode with Style Dictionary](https://github.com/sturobson/Style-Dictionary-Starter/tree/07-light-and-dark-mode)
-    - [Part A](https://github.com/sturobson/Style-Dictionary-Starter/tree/07a-light-and-dark-mode)
-    - [Part B](https://github.com/sturobson/Style-Dictionary-Starter/tree/07b-light-and-dark-mode)
+7. [Implementing Light and Dark Mode with Style Dictionary (part 2)](https://github.com/sturobson/Style-Dictionary-Starter/tree/08-light-and-dark-mode-2)
+    - [Part A](https://github.com/sturobson/Style-Dictionary-Starter/tree/08-light-and-dark-mode)
