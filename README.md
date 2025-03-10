@@ -27,5 +27,5 @@ Each article is structured as its own branch in this repository.
 5. [Organising Outputs with Style Dictionary](https://github.com/sturobson/Style-Dictionary-Starter/tree/05-organising-outputs)
 6. [Layers: Referencing Tokens in Style Dictionary](https://github.com/sturobson/Style-Dictionary-Starter/tree/06-creating-layers)
 7. [Implementing Light and Dark Mode with Style Dictionary](https://github.com/sturobson/Style-Dictionary-Starter/tree/07-light-and-dark-mode)
-  - [Part A](https://github.com/sturobson/Style-Dictionary-Starter/tree/07a-light-and-dark-mode)
-  - [Part B](https://github.com/sturobson/Style-Dictionary-Starter/tree/07b-light-and-dark-mode)
+    - [Part A](https://github.com/sturobson/Style-Dictionary-Starter/tree/07a-light-and-dark-mode)
+    - [Part B](https://github.com/sturobson/Style-Dictionary-Starter/tree/07b-light-and-dark-mode)
