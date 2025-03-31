@@ -1,0 +1,40 @@
+{
+  "spacing": {
+    "element": {
+      "xsmall": {
+        "$value": "{spacing.base.xs}",
+        "$type": "dimension"
+      },
+      "small": {
+        "$value": "{spacing.base.sm}",
+        "$type": "dimension"
+      },
+      "medium": {
+        "$value": "{spacing.base.md}",
+        "$type": "dimension"
+      },
+      "large": {
+        "$value": "{spacing.base.lg}",
+        "$type": "dimension"
+      },
+      "xlarge": {
+        "$value": "{spacing.base.xl}",
+        "$type": "dimension"
+      }
+    },
+    "layout": {
+      "small": {
+        "$value": "{spacing.base.md}",
+        "$type": "dimension"
+      },
+      "medium": {
+        "$value": "{spacing.base.lg}",
+        "$type": "dimension"
+      },
+      "large": {
+        "$value": "{spacing.base.xl}",
+        "$type": "dimension"
+      }
+    }
+  }
+}

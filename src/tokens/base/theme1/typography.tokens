@@ -1,0 +1,38 @@
+{
+  "font": {
+    "family": {
+      "primary": {
+        "$value": "'Roboto', sans-serif",
+        "$type": "fontFamily"
+      },
+      "secondary": {
+        "$value": "'Open Sans', sans-serif",
+        "$type": "fontFamily"
+      }
+    },
+    "weight": {
+      "regular": {
+        "$value": "400",
+        "$type": "fontWeight"
+      },
+      "bold": {
+        "$value": "700",
+        "$type": "fontWeight"
+      }
+    },
+    "size": {
+      "small": {
+        "$value": "14px",
+        "$type": "dimension"
+      },
+      "medium": {
+        "$value": "16px",
+        "$type": "dimension"
+      },
+      "large": {
+        "$value": "24px",
+        "$type": "dimension"
+      }
+    }
+  }
+}

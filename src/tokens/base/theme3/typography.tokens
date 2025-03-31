@@ -1,0 +1,38 @@
+{
+  "font": {
+    "family": {
+      "primary": {
+        "$value": "'Poppins', sans-serif",
+        "$type": "fontFamily"
+      },
+      "secondary": {
+        "$value": "'Merriweather', serif",
+        "$type": "fontFamily"
+      }
+    },
+    "weight": {
+      "regular": {
+        "$value": "300",
+        "$type": "fontWeight"
+      },
+      "bold": {
+        "$value": "500",
+        "$type": "fontWeight"
+      }
+    },
+    "size": {
+      "small": {
+        "$value": "16px",
+        "$type": "dimension"
+      },
+      "medium": {
+        "$value": "18px",
+        "$type": "dimension"
+      },
+      "large": {
+        "$value": "26px",
+        "$type": "dimension"
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "color": {
+    "base": {
+      "primary": {
+        "$value": "#9933CC",
+        "$type": "color"
+      },
+      "secondary": {
+        "$value": "#495057",
+        "$type": "color"
+      },
+      "background": {
+        "$value": "#F8F9FA",
+        "$type": "color"
+      },
+      "text": {
+        "$value": "#343A40",
+        "$type": "color"
+      },
+      "accent": {
+        "$value": "#FF5722",
+        "$type": "color"
+      }
+    }
+  }
+}
