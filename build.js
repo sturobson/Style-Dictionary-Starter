@@ -20,7 +20,7 @@ function getStyleDictionaryConfig(theme, format) {
         buildPath: `build/${format}/base/`,
         files: [
           {
-            destination: `${theme}.${format}`,
+            destination: `${theme}/tokens.${format}`,
             format: `${format}/variables`,
             filter: (token) => token.filePath.includes(`src/tokens/base/${theme}/`)
           }
