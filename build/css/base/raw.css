@@ -3,11 +3,11 @@
  */
 
 :root {
-  --color-base-primary: #0066cc;
-  --color-base-secondary: #6c757d;
-  --color-base-background: #ffffff;
-  --color-base-text: #212529;
-  --color-base-accent: #ffc107;
+  --color-base-primary: #d7182a;
+  --color-base-secondary: #8b0000;
+  --color-base-background: #ffcdd2;
+  --color-base-text: #000000;
+  --color-base-accent: #ffd700;
   --spacing-base-xs: 4px;
   --spacing-base-sm: 8px;
   --spacing-base-md: 16px;
