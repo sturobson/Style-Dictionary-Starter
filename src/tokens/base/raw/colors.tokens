@@ -2,23 +2,23 @@
   "color": {
     "base": {
       "primary": {
-        "$value": "#2E7D32",
+        "$value": "#d7182a",
         "$type": "color"
       },
       "secondary": {
-        "$value": "#546E7A",
+        "$value": "#8B0000",
         "$type": "color"
       },
       "background": {
-        "$value": "#E8F5E9",
+        "$value": "#FFCDD2",
         "$type": "color"
       },
       "text": {
-        "$value": "#1B5E20",
+        "$value": "#000000",
         "$type": "color"
       },
       "accent": {
-        "$value": "#F57F17",
+        "$value": "#FFD700",
         "$type": "color"
       }
     }

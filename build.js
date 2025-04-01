@@ -1,42 +1,44 @@
 import { globSync } from 'glob';
 import StyleDictionary from 'style-dictionary';
 
-// The themes we want to generate
-const themes = ['theme1', 'theme2', 'theme3'];
+// The brands we want to generate
+const brands = ['raw', 'smackdown', 'nxt'];
 // The output formats we want to generate
 const formats = ['css', 'scss'];
 
-// Function to get config for a specific theme and format
-function getStyleDictionaryConfig(theme, format) {
+// Function to get config for a specific brand and format (base tokens)
+function getStyleDictionaryConfig(brand, format) {
+  // Base platform configuration (for both CSS and SCSS)
+  const platformConfig = {
+    [`${format}_base`]: {
+      transformGroup: format,
+      buildPath: `build/${format}/base/`,
+      files: [
+        {
+          destination: `${brand}.${format}`,
+          format: `${format}/variables`,
+          filter: (token) => token.filePath.includes(`src/tokens/base/${brand}/`)
+        }
+      ]
+    }
+  };
+  
+  // Removed the brand CSS files configuration here
+
   return {
     source: [
-      `src/tokens/base/${theme}/**/*.tokens`,
+      `src/tokens/base/${brand}/**/*.tokens`,
       'src/tokens/semantic/**/*.tokens'
     ],
-    platforms: {
-      // Configuration for base tokens - outputting to /base/ folder
-      [`${format}_base`]: {
-        transformGroup: format,
-        buildPath: `build/${format}/base/`,
-        files: [
-          {
-            destination: `${theme}/tokens.${format}`,
-            format: `${format}/variables`,
-            filter: (token) => token.filePath.includes(`src/tokens/base/${theme}/`)
-          }
-        ]
-      }
-    }
+    platforms: platformConfig
   };
 }
 
-// Only generate semantic once, not per theme
+// Only generate semantic once, not per brand
 function getSemanticConfig(format) {
-  // We'll just use theme1 as the "base" for semantic tokens
-  // but the references will work for any theme
   return {
     source: [
-      'src/tokens/base/theme1/**/*.tokens', // Need the base tokens for reference
+      'src/tokens/base/raw/**/*.tokens', // a brand (any brand) is needed to generate semantic tokens
       'src/tokens/semantic/**/*.tokens'
     ],
     platforms: {
@@ -58,6 +60,19 @@ function getSemanticConfig(format) {
   };
 }
 
+// Helper function to safely get token value
+function getTokenValue(token) {
+  if (token && token.original && token.original.$value) {
+    return token.original.$value;
+  }
+  if (token && token.value) {
+    return token.value;
+  }
+  return token.value;
+}
+
+// Removed the brand wrapper format registration
+
 // Register custom format for CSS semantic variables with ds- prefix
 StyleDictionary.hooks.formats['css/variables-semantic'] = function({ dictionary, options }) {
   const semanticTokens = dictionary.allTokens.filter(token => 
@@ -65,17 +80,17 @@ StyleDictionary.hooks.formats['css/variables-semantic'] = function({ dictionary,
   );
 
   const variables = semanticTokens.map((token) => {
-    const { name } = token;
+    const name = token.path.join('-');
     const description = token.original.$description || '';
     
-    const referenceValue = token.original.$value;
+    const referenceValue = getTokenValue(token);
     if (typeof referenceValue === 'string' && referenceValue.startsWith('{')) {
       const refPath = referenceValue.replace(/^\{|\}$/g, '');
       const cssVarName = `var(--${refPath.replace(/\./g, '-')})`;
       
       return `  --ds-${name}: ${cssVarName};${description ? ` /* ${description} */` : ''}`;
     } else {
-      return `  --ds-${name}: ${token.value};${description ? ` /* ${description} */` : ''}`;
+      return `  --ds-${name}: ${referenceValue};${description ? ` /* ${description} */` : ''}`;
     }
   }).join('\n');
 
@@ -89,26 +104,26 @@ StyleDictionary.hooks.formats['scss/variables-semantic'] = function({ dictionary
   );
 
   const variables = semanticTokens.map((token) => {
-    const { name } = token;
+    const name = token.path.join('-');
     const description = token.original.$description || '';
     
-    const referenceValue = token.original.$value;
+    const referenceValue = getTokenValue(token);
     if (typeof referenceValue === 'string' && referenceValue.startsWith('{')) {
       const refPath = referenceValue.replace(/^\{|\}$/g, '');
       return `$ds-${name}: $${refPath.replace(/\./g, '-')};${description ? ` // ${description}` : ''}`;
     } else {
-      return `$ds-${name}: ${token.value};${description ? ` // ${description}` : ''}`;
+      return `$ds-${name}: ${referenceValue};${description ? ` // ${description}` : ''}`;
     }
   }).join('\n');
 
   return variables;
 };
 
-// Loop through each theme and format and build base tokens
-themes.forEach(theme => {
+// Loop through each brand and format and build base tokens
+brands.forEach(brand => {
   formats.forEach(format => {
-    console.log(`Building ${format} base tokens for ${theme}...`);
-    const sd = new StyleDictionary(getStyleDictionaryConfig(theme, format));
+    console.log(`Building ${format} tokens for ${brand}...`);
+    const sd = new StyleDictionary(getStyleDictionaryConfig(brand, format));
     
     // For each platform in the config
     Object.keys(sd.config.platforms).forEach(platform => {
