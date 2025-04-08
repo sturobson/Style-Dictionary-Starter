@@ -1,146 +1,49 @@
 import { globSync } from 'glob';
 import StyleDictionary from 'style-dictionary';
 
-// The themes we want to generate
-const themes = ['theme1', 'theme2', 'theme3'];
-// The output formats we want to generate
-const formats = ['css'];
+const tokenFiles = globSync('src/tokens/**/*.tokens');
+const HEADER_COMMENT = `/**
+ * Do not edit directly, this file was auto-generated.
+ */\n\n`;
 
-// Function to get config for a specific theme and format (theme tokens)
-function getStyleDictionaryConfig(theme, format) {
-  const platformConfig = {};
-
-  // Add theme CSS files
-  platformConfig[`${format}_theme`] = {
-    transformGroup: format,
-    buildPath: `build/${format}/themes/`,
-    files: [
-      {
-        destination: `${theme}.${format}`,
-        format: `${format}/theme-wrapper`,
-        filter: (token) => token.filePath.includes(`src/tokens/base/${theme}/`),
-        options: {
-          themeName: theme
-        }
-      }
-    ]
-  };
-
-  return {
-    source: [
-      `src/tokens/base/${theme}/**/*.tokens`,
-      'src/tokens/semantic/**/*.tokens'
-    ],
-    platforms: platformConfig
-  };
-}
-
-// Only generate semantic once, not per theme
-function getSemanticConfig(format) {
-  return {
-    source: [
-      'src/tokens/base/theme1/**/*.tokens', // Need the base tokens for reference
-      'src/tokens/semantic/**/*.tokens'
-    ],
-    platforms: {
-      [`${format}_semantic`]: {
-        transformGroup: format,
-        buildPath: `build/${format}/semantic/`,
-        files: [
-          {
-            destination: `tokens.${format}`,
-            format: `${format}/variables-semantic`,
-            filter: (token) => token.filePath.includes('src/tokens/semantic/'),
-            options: {
-              outputReferences: true
-            }
-          }
-        ]
-      }
-    }
-  };
-}
-
-// Helper function to safely get token value
-function getTokenValue(token) {
-  if (token && token.original && token.original.$value) {
-    return token.original.$value;
-  }
-  if (token && token.value) {
-    return token.value;
-  }
-  return token.value;
-}
-
-// Register custom format for CSS theme wrapper with class selector
-StyleDictionary.hooks.formats['css/theme-wrapper'] = function({ dictionary, options }) {
-  const themeName = options.themeName || 'default';
-  
-  const tokens = dictionary.allTokens.filter(token => 
-    token.filePath.includes(`src/tokens/base/${themeName}/`)
-  );
-
-  console.log(`Theme ${themeName} has ${tokens.length} tokens for theme wrapper`);
-  
-  const variables = tokens.map((token) => {
-    const name = token.path.join('-');
-    const value = getTokenValue(token);
-    
-    return `  --${name}: ${value};`;
+// Custom format for Sass-backed CSS custom properties
+StyleDictionary.hooks.formats['css/sass-ref'] = function ({ dictionary }) {
+  const tokens = dictionary.allTokens.map((token) => {
+    const sassVariable = token.original.$value.startsWith('{spacing.')
+      ? `$spacing-${token.original.$value.match(/spacing\.(\d+)\.\$value/)[1]}`
+      : `$${token.name}`; // Resolve to base token if it's a reference
+    return `  --${token.name}: #{${sassVariable}};`; // Correct interpolation
   }).join('\n');
-
-  return `.${themeName} {\n${variables}\n}`;
+  return `${HEADER_COMMENT}@use "../base/_base-tokens.scss";\n\n:root {\n${tokens}\n}`;
 };
 
-
-
-// Register custom format for CSS semantic variables with ds- prefix
-StyleDictionary.hooks.formats['css/variables-semantic'] = function({ dictionary, options }) {
-  const semanticTokens = dictionary.allTokens.filter(token => 
-    token.filePath.includes('src/tokens/semantic/')
-  );
-
-  const variables = semanticTokens.map((token) => {
-    const name = token.path.join('-');
-    const description = token.original.$description || '';
-    
-    const referenceValue = getTokenValue(token);
-    if (typeof referenceValue === 'string' && referenceValue.startsWith('{')) {
-      const refPath = referenceValue.replace(/^\{|\}$/g, '');
-      const cssVarName = `var(--${refPath.replace(/\./g, '-')})`;
-      
-      return `  --ds-${name}: ${cssVarName};${description ? ` /* ${description} */` : ''}`;
-    } else {
-      return `  --ds-${name}: ${referenceValue};${description ? ` /* ${description} */` : ''}`;
-    }
-  }).join('\n');
-
-  return `:root {\n${variables}\n}`;
-};
-
-
-// Loop through each theme and format and build theme tokens
-themes.forEach(theme => {
-  formats.forEach(format => {
-    console.log(`Building ${format} tokens for ${theme}...`);
-    const sd = new StyleDictionary(getStyleDictionaryConfig(theme, format));
-    
-    // For each platform in the config
-    Object.keys(sd.config.platforms).forEach(platform => {
-      sd.buildPlatform(platform);
-    });
-  });
+const myStyleDictionary = new StyleDictionary({
+  source: tokenFiles,
+  platforms: {
+    sass_base: {
+      transformGroup: 'scss',
+      buildPath: 'build/sass/base/',
+      files: [
+        {
+          destination: '_base-tokens.scss',
+          format: 'scss/variables',
+          filter: (token) => token.filePath.includes('base'), // Only base tokens
+        },
+      ],
+    },
+    css_semantic: {
+      transformGroup: 'scss',
+      buildPath: 'build/sass/semantic/',
+      files: [
+        {
+          destination: 'variables.scss',
+          format: 'css/sass-ref',
+          filter: (token) => token.filePath.includes('semantic'), // Only semantic tokens
+        },
+      ],
+    },
+  },
 });
 
-// Build semantic tokens once for each format
-formats.forEach(format => {
-  console.log(`Building ${format} semantic tokens...`);
-  const sd = new StyleDictionary(getSemanticConfig(format));
-  
-  // For each platform in the config
-  Object.keys(sd.config.platforms).forEach(platform => {
-    sd.buildPlatform(platform);
-  });
-});
-
+myStyleDictionary.buildAllPlatforms();
 console.log('Build completed!');
