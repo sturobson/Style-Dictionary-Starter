@@ -1,39 +1,23 @@
 {
-  "spacing": {
-    "element": {
-      "xsmall": {
-        "$value": "{spacing.base.xs}",
-        "$type": "dimension"
+  "component": {
+    "margin": {
+      "inline": {
+        "$value": "{spacing.400.$value}",
+        "$type": "spacing"
       },
-      "small": {
-        "$value": "{spacing.base.sm}",
-        "$type": "dimension"
-      },
-      "medium": {
-        "$value": "{spacing.base.md}",
-        "$type": "dimension"
-      },
-      "large": {
-        "$value": "{spacing.base.lg}",
-        "$type": "dimension"
-      },
-      "xlarge": {
-        "$value": "{spacing.base.xl}",
-        "$type": "dimension"
+      "block": {
+        "$value": "{spacing.400.$value}",
+        "$type": "spacing"
       }
     },
-    "layout": {
-      "small": {
-        "$value": "{spacing.base.md}",
-        "$type": "dimension"
+    "padding": {
+      "inline": {
+        "$value": "{spacing.100.$value}",
+        "$type": "spacing"
       },
-      "medium": {
-        "$value": "{spacing.base.lg}",
-        "$type": "dimension"
-      },
-      "large": {
-        "$value": "{spacing.base.xl}",
-        "$type": "dimension"
+      "block": {
+        "$value": "{spacing.100.$value}",
+        "$type": "spacing"
       }
     }
   }

@@ -1,0 +1,24 @@
+{
+  "spacing": {
+    "100": { 
+      "$value": "0.125rem",
+      "$type": "spacing"
+    },
+    "200": { 
+      "$value": "0.25rem",
+      "$type": "spacing"
+    },
+    "300": { 
+      "$value": "0.5rem",
+      "$type": "spacing"
+    },
+    "400": { 
+      "$value": "1rem",
+      "$type": "spacing"
+    },
+    "800": { 
+      "$value": "2rem",
+      "$type": "spacing"
+    }
+  }
+}
