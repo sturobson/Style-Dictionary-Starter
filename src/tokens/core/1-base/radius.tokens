@@ -1,0 +1,42 @@
+{
+    "base": {
+        "radius": {
+            "100": {
+                "$value": "4px",
+                "$type": "borderRadius"
+            },
+            "200": {
+                "$value": "8px",
+                "$type": "borderRadius"
+            },
+            "300": {
+                "$value": "12px",
+                "$type": "borderRadius"
+            },
+            "400": {
+                "$value": "16px",
+                "$type": "borderRadius"
+            },
+            "500": {
+                "$value": "20px",
+                "$type": "borderRadius"
+            },
+            "600": {
+                "$value": "24px",
+                "$type": "borderRadius"
+            },
+            "700": {
+                "$value": "28px",
+                "$type": "borderRadius"
+            },
+            "800": {
+                "$value": "32px",
+                "$type": "borderRadius"
+            },
+            "900": {
+                "$value": "36px",
+                "$type": "borderRadius"
+            }
+        }
+    }
+}

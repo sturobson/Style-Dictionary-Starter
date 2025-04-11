@@ -1,0 +1,50 @@
+{
+    "default": {
+        "color": {
+            "background": {
+                "default": {
+                    "$value": "{base.neutral.100}",
+                    "$type": "color"
+                },
+                "muted": {
+                    "$value": "{base.neutral.200}",
+                    "$type": "color"
+                }
+            },
+            "primary": {
+                "default": {
+                    "$value": "{base.color.blue.100}",
+                    "$type": "color"
+                },
+                "hover": {
+                    "$value": "{base.color.blue.200}",
+                    "$type": "color"
+                }
+            }
+        },
+        "spacing": {
+            "small": {
+                "$value": "{base.spacing.100}",
+                "$type": "dimension"
+            },
+            "medium": {
+                "$value": "{base.spacing.200}",
+                "$type": "dimension"
+            },
+            "large": {
+                "$value": "{base.spacing.300}",
+                "$type": "dimension"
+            }
+        },
+        "radius": {
+            "small": {
+                "$value": "{base.radius.100}",
+                "$type": "dimension"
+            },
+            "large": {
+                "$value": "{base.radius.200}",
+                "$type": "dimension"
+            }
+        }
+    }
+}
