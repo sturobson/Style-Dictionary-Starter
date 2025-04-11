@@ -1,64 +1,114 @@
-import { globSync } from 'glob'; // For file pattern matching
 import StyleDictionary from 'style-dictionary';
+import fs from 'fs';
+import path from 'path';
+import { globSync } from 'glob';
+
+const getThemesAndMetadata = () => {
+  const coreFolders = globSync('src/tokens/core/*');
+  const semanticFolders = globSync('src/tokens/semantic/*');
+  const themes = [];
+  const tokenSetOrder = [];
+
+  // Include core folders in the token set order
+  const sortedCoreFolders = coreFolders.sort((a, b) => {
+    const aPrefix = parseInt(path.basename(a).split('-')[0], 10) || 0;
+    const bPrefix = parseInt(path.basename(b).split('-')[0], 10) || 0;
+    return aPrefix - bPrefix;
+  });
+
+  sortedCoreFolders.forEach(folder => {
+    const folderName = path.basename(folder).replace(/^\d+-/, ''); // Remove numeric prefix
+    tokenSetOrder.push(folderName);
+  });
+
+  // Include semantic folders in the token set order and themes
+  const sortedSemanticFolders = semanticFolders.sort((a, b) => {
+    const aPrefix = parseInt(path.basename(a).split('-')[0], 10) || 0;
+    const bPrefix = parseInt(path.basename(b).split('-')[0], 10) || 0;
+    return aPrefix - bPrefix;
+  });
+
+  sortedSemanticFolders.forEach(folder => {
+    const folderName = path.basename(folder).replace(/^\d+-/, ''); // Remove numeric prefix
+    tokenSetOrder.push(folderName);
+
+    if (folderName !== 'base') {
+      themes.push({
+        name: folderName.replace(/-/g, ' '),
+        selectedTokenSets: {
+          base: 'enabled',
+          [folderName]: 'enabled'
+        }
+      });
+    }
+  });
+
+  return { themes, metadata: {
+    "$metadata": {
+      "tokenSetOrder": tokenSetOrder,
+      "activeThemes": themes.map(theme => `/${theme.name}`),
+      "activeSets": tokenSetOrder
+    }
+  }};
+};
+
+StyleDictionary.registerFormat({
+  name: 'json/penpot',
+  format: async function ({ dictionary }) {
+    const simplifyTokens = (tokens) => {
+      const result = {};
+      Object.entries(tokens).forEach(([key, token]) => {
+        if (token.$value !== undefined) {
+          result[key] = {
+            $value: token.$value,
+            $type: token.$type
+          };
+        } else if (typeof token === 'object') {
+          result[key] = simplifyTokens(token);
+        }
+      });
+      return result;
+    };
+
+    const { themes, metadata } = getThemesAndMetadata();
+    const semanticTokens = simplifyTokens(dictionary.tokens);
+
+    return JSON.stringify({ ...semanticTokens, "$themes": themes, ...metadata }, null, 2);
+  }
+});
 
 // Find all token files matching the pattern
 const tokenFiles = globSync('src/tokens/**/*.tokens');
-
-// Header comment for generated files
-const HEADER_COMMENT = `// Do not edit directly, this file was auto-generated.\n\n`;
 
 // Configure Style Dictionary instance
 const myStyleDictionary = new StyleDictionary({
   source: tokenFiles,
   platforms: {
-    sass_base: {
-      transformGroup: 'scss', // Use standard SCSS transforms
-      buildPath: 'build/sass/base/',
+    json_combined: {
+      buildPath: 'build/',
       files: [{
-        destination: '_base-tokens.scss',
-        format: 'scss/variables', // SCSS variables format
-        filter: (token) => token.filePath.includes('base'), // Only process base tokens
-      }],
-    },
-    css_semantic: {
-      transformGroup: 'scss', // Use SCSS transforms
-      buildPath: 'build/sass/semantic/',
-      files: [{
-        destination: 'variables.scss',
-        format: 'css/sass-ref', // Custom format defined in hooks
-        filter: (token) => token.filePath.includes('semantic'), // Only process semantic tokens
-      }],
-    },
-  },
-  // Custom format definitions
-  hooks: {
-    formats: {
-      // Custom CSS format that references Sass variables
-      'css/sass-ref': function ({ dictionary }) {
-        // Process all tokens in the dictionary
-        const tokens = dictionary.allTokens.map((token) => {
-          const isReference = typeof token.original.$value === 'string' && 
-          token.original.$value.startsWith('{') && 
-          token.original.$value.endsWith('}');
-          
-          const sassVariable = isReference 
-          ? `$${token.original.$value
-            .slice(1, -1) // Remove curly braces
-            .replace(/\.\$value/g, '') // Remove .$value suffix first
-            .replace(/\./g, '-')}` // Then convert remaining dots to hyphens
-            : `$${token.name}`;
-            
-            return `  --${token.name}: #{${sassVariable}};`;
-          }).join('\n');
-          
-          // Combine header, Sass import, and CSS variables
-          return `${HEADER_COMMENT}@use "../base/_base-tokens.scss";\n\n:root {\n${tokens}\n}`;
+        destination: 'penpot.json',
+        format: 'json/penpot',
+        options: {
+          outputReferences: true,
+          nesting: {
+            global: 'src/tokens/base/**/*.tokens',
+            semantic: 'src/tokens/semantic/**/*.tokens'
+          }
         }
-      }
-    }
-  });
-  
-  // Execute the build process for all platforms
-  myStyleDictionary.buildAllPlatforms();
+      }],
+    },
+  }
+});
+
+// Ensure the build directory exists
+const buildDir = path.resolve('build');
+if (!fs.existsSync(buildDir)) {
+  fs.mkdirSync(buildDir);
+}
+
+// Execute the build process for the json_combined platform
+(async () => {
+  await myStyleDictionary.buildAllPlatforms();
   console.log('Build completed!');
-  
+})();
