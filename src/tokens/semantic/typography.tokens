@@ -2,43 +2,43 @@
   "typography": {
     "heading": {
       "fontFamily": {
-        "$value": "{font.family.primary}",
+        "$value": "{typography.font.family.primary}",
         "$type": "fontFamily"
       },
       "fontWeight": {
-        "$value": "{font.weight.bold}",
+        "$value": "{typography.font.weight.bold}",
         "$type": "fontWeight"
       },
       "fontSize": {
-        "$value": "{font.size.large}",
+        "$value": "{typography.font.size.large}",
         "$type": "dimension"
       }
     },
     "body": {
       "fontFamily": {
-        "$value": "{font.family.secondary}",
+        "$value": "{typography.font.family.secondary}",
         "$type": "fontFamily"
       },
       "fontWeight": {
-        "$value": "{font.weight.regular}",
+        "$value": "{typography.font.weight.regular}",
         "$type": "fontWeight"
       },
       "fontSize": {
-        "$value": "{font.size.medium}",
+        "$value": "{typography.font.size.medium}",
         "$type": "dimension"
       }
     },
     "caption": {
       "fontFamily": {
-        "$value": "{font.family.secondary}",
+        "$value": "{typography.font.family.secondary}",
         "$type": "fontFamily"
       },
       "fontWeight": {
-        "$value": "{font.weight.regular}",
+        "$value": "{typography.font.weight.regular}",
         "$type": "fontWeight"
       },
       "fontSize": {
-        "$value": "{font.size.small}",
+        "$value": "{typography.font.size.small}",
         "$type": "dimension"
       }
     }
