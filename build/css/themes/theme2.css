@@ -1,0 +1,26 @@
+.theme2 {
+  --color-base-primary: #212529;
+  --color-base-secondary: #343A40;
+  --color-base-background: #121212;
+  --color-base-text: #E9ECEF;
+  --color-base-accent: #17A2B8;
+  --spacing-base-xs: 4px;
+  --spacing-base-sm: 8px;
+  --spacing-base-md: 16px;
+  --spacing-base-lg: 24px;
+  --spacing-base-xl: 32px;
+  --typography-font-family-primary: 'Roboto', sans-serif;
+  --typography-font-family-secondary: 'Open Sans', sans-serif;
+  --typography-font-weight-regular: 400;
+  --typography-font-weight-bold: 700;
+  --typography-font-size-small: 14px;
+  --typography-font-size-medium: 16px;
+  --typography-font-size-large: 24px;
+  --font-family-primary: 'Roboto', sans-serif;
+  --font-family-secondary: 'Open Sans', sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+  --font-size-small: 14px;
+  --font-size-medium: 16px;
+  --font-size-large: 24px;
+}

@@ -1,0 +1,19 @@
+.theme3 {
+  --color-base-primary: #FFC107;
+  --color-base-secondary: #F44336;
+  --color-base-background: #FFF4E0;
+  --color-base-text: #333333;
+  --color-base-accent: #4CAF50;
+  --spacing-base-xs: 4px;
+  --spacing-base-sm: 8px;
+  --spacing-base-md: 16px;
+  --spacing-base-lg: 24px;
+  --spacing-base-xl: 32px;
+  --typography-font-family-primary: 'Roboto', sans-serif;
+  --typography-font-family-secondary: 'Open Sans', sans-serif;
+  --typography-font-weight-regular: 400;
+  --typography-font-weight-bold: 700;
+  --typography-font-size-small: 14px;
+  --typography-font-size-medium: 16px;
+  --typography-font-size-large: 24px;
+}
