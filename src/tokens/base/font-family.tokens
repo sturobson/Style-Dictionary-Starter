@@ -1,0 +1,14 @@
+{
+  "font": {
+    "family": {
+      "base": {
+        "$value": "Arial, sans-serif",
+        "$type": "fontFamily"
+      },
+      "code": {
+        "$value": "Consolas, monospace",
+        "$type": "fontFamily"
+      }
+    }
+  }
+}

@@ -1,15 +1,5 @@
 {
   "font": {
-    "family": {
-      "base": {
-        "$value": "Arial, sans-serif",
-        "$type": "font"
-      },
-      "code": {
-        "$value": "Consolas, monospace",
-        "$type": "font"
-      }
-    },
     "size": {
       "100": {
         "$value": "0.75rem",
@@ -41,20 +31,6 @@
       },
       "800": {
         "$value": "2rem",
-        "$type": "dimension"
-      }
-    },
-    "weight": {
-      "bold": {
-        "$value": "700",
-        "$type": "dimension"
-      },
-      "book": {
-        "$value": "500",
-        "$type": "dimension"
-      },
-      "light": {
-        "$value": "200",
         "$type": "dimension"
       }
     }

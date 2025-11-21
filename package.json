@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf build",
-    "build": "npm run clean && node build.js"
+    "build": "npm run clean && node build.js --verbose"
   },
   "repository": {
     "type": "git",

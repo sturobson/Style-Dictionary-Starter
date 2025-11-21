@@ -1,68 +1,28 @@
-// config/utilities.js
-export const utilities = [
-  {
-    'name': 'padding',
-    'tokenType': 'spacing',
-    'CSSprop': 'padding'
-  },
-  {
-    'name': 'padding-left',
-    'tokenType': 'spacing',
-    'CSSprop': 'padding-left'
-  },
-  {
-    'name': 'padding-right',
-    'tokenType': 'spacing',
-    'CSSprop': 'padding-right'
-  },
-  {
-    'name': 'padding-top',
-    'tokenType': 'spacing',
-    'CSSprop': 'padding-top'
-  },
-  {
-    'name': 'padding-bottom',
-    'tokenType': 'spacing',
-    'CSSprop': 'padding-bottom'
-  },
-  {
-    'name': 'margin',
-    'tokenType': 'spacing',
-    'CSSprop': 'margin'
-  },
-  {
-    'name': 'margin-left',
-    'tokenType': 'spacing',
-    'CSSprop': 'margin-left'
-  },
-  {
-    'name': 'margin-right',
-    'tokenType': 'spacing',
-    'CSSprop': 'margin-right'
-  },
-  {
-    'name': 'margin-top',
-    'tokenType': 'spacing',
-    'CSSprop': 'margin-top'
-  },
-  {
-    'name': 'margin-bottom',
-    'tokenType': 'spacing',
-    'CSSprop': 'margin-bottom'
-  },
-  {
-    'name': 'gap',
-    'tokenType': 'spacing',
-    'CSSprop': 'gap'
-  },
-  {
-    'name': 'column-gap',
-    'tokenType': 'spacing',
-    'CSSprop': 'column-gap'
-  },
-  {
-    'name': 'row-gap',
-    'tokenType': 'spacing',
-    'CSSprop': 'row-gap'
-  },
-];
+export const utilityConfig = {
+  spacing: [
+    { prefix: 'padding', property: 'padding' },
+    { prefix: 'padding-top', property: 'padding-top' },
+    { prefix: 'padding-right', property: 'padding-right' },
+    { prefix: 'padding-bottom', property: 'padding-bottom' },
+    { prefix: 'padding-left', property: 'padding-left' },
+    { prefix: 'margin', property: 'margin' },
+    { prefix: 'margin-top', property: 'margin-top' },
+    { prefix: 'margin-right', property: 'margin-right' },
+    { prefix: 'margin-bottom', property: 'margin-bottom' },
+    { prefix: 'margin-left', property: 'margin-left' }
+  ],
+  color: [
+    { prefix: 'text', property: 'color' },
+    { prefix: 'background', property: 'background-color' },
+    { prefix: 'border', property: 'border-color' }
+  ],
+  fontSize: [
+    { prefix: 'font-size', property: 'font-size' }
+  ],
+  fontWeight: [
+    { prefix: 'font-weight', property: 'font-weight' }
+  ],
+  fontFamily: [
+    { prefix: 'font-family', property: 'font-family' }
+  ]
+};

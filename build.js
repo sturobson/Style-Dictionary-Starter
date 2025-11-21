@@ -1,116 +1,95 @@
-import { globSync } from 'glob';
 import StyleDictionary from 'style-dictionary';
-import { utilities } from './config/utilities.js'; // For spacing utilities
-import { colorUtilities } from './config/colorUtilities.js'; // For color utilities
-import { fontUtilities } from './config/fontUtilities.js'; // For font utilities
+import { utilityConfig } from './config/utilities.js';
 
-const tokenFiles = globSync('src/tokens/**/*.tokens');
-const HEADER_COMMENT = `/**
- * Do not edit directly, this file was auto-generated.
- */\n\n`;
+// Helper function to create utility format
+function createUtilityFormat(configKey, tokenPath, title) {
+  return function({ dictionary }) {
+    let output = `/* ${title} */\n\n`;
 
-// Register a new format for generating spacing utility classes
-StyleDictionary.hooks.formats['utilityClass'] = function({ dictionary }) {
-  let output = '';
-
-  // Iterate over all tokens for spacing
-  dictionary.allTokens.forEach(function (token) {
-    const tokenType = token.path[0]; // Get the token type (e.g., spacing)
-
-    // Check each utility definition for spacing
-    utilities.forEach(function (utility) {
-      if (tokenType === utility.tokenType) {
-        const tokenShade = token.path[1]; // Get the shade (e.g., 100, 200, 300)
-        const utilityClass = `u-${utility.name}-${tokenShade}`; // Create utility class name
-
-        // Use the correct value based on the token's original value
-        const tokenValue = token.original["$value"];
-        output += `.${utilityClass} { ${utility.CSSprop}: ${tokenValue}; }\n`;
-      }
+    utilityConfig[configKey].forEach(util => {
+      dictionary.allTokens
+        .filter(token => {
+          // Handle both single path (spacing, color) and nested paths (font.size, font.weight)
+          if (tokenPath.length === 1) {
+            return token.path[0] === tokenPath[0];
+          }
+          return token.path[0] === tokenPath[0] && token.path[1] === tokenPath[1];
+        })
+        .forEach(token => {
+          // Build class name
+          let tokenName;
+          if (tokenPath[0] === 'color') {
+            tokenName = token.path.slice(1).join('-');
+          } else {
+            tokenName = token.path[token.path.length - 1];
+          }
+          
+          const className = `${util.prefix}-${tokenName}`;
+          output += `.${className} {\n  ${util.property}: ${token.$value};\n}\n\n`;
+        });
     });
-  });
 
-  return output;
-};
+    return output;
+  };
+}
 
-// Register a new format for generating color utility classes
-StyleDictionary.hooks.formats['colorUtilityClass'] = function({ dictionary }) {
-  let output = '';
+// Register all formats using the helper
+StyleDictionary.registerFormat({
+  name: 'css/utility-spacing',
+  format: createUtilityFormat('spacing', ['spacing'], 'Spacing Utilities')
+});
 
-  // Iterate over all tokens for colors
-  dictionary.allTokens.forEach(function (token) {
-    const tokenType = token.path[0]; // Get the token type (e.g., color)
+StyleDictionary.registerFormat({
+  name: 'css/utility-color',
+  format: createUtilityFormat('color', ['color'], 'Color Utilities')
+});
 
-    // Check each utility definition for colors
-    colorUtilities.forEach(function (utility) {
-      if (tokenType === utility.tokenType) {
-        const colorName = token.path[1]; // Get the color name (e.g., red, blue)
-        const tokenShade = token.path[2]; // Get the shade (e.g., 300, 400, 500)
+StyleDictionary.registerFormat({
+  name: 'css/utility-font-size',
+  format: createUtilityFormat('fontSize', ['font', 'size'], 'Font Size Utilities')
+});
 
-        // Create utility class names with shades
-        const utilityClass = `u-${utility.name}-${colorName}--${tokenShade}`; // Create utility class name
+StyleDictionary.registerFormat({
+  name: 'css/utility-font-weight',
+  format: createUtilityFormat('fontWeight', ['font', 'weight'], 'Font Weight Utilities')
+});
 
-        // Use the correct value based on the token's original value
-        const tokenValue = token.original["$value"];
-        output += `.${utilityClass} { ${utility.CSSprop}: ${tokenValue}; }\n`;
-      }
-    });
-  });
+StyleDictionary.registerFormat({
+  name: 'css/utility-font-family',
+  format: createUtilityFormat('fontFamily', ['font', 'family'], 'Font Family Utilities')
+});
 
-  return output;
-};
-
-// Register a new format for generating font utility classes
-StyleDictionary.hooks.formats['fontUtilityClass'] = function({ dictionary }) {
-  let output = '';
-
-  // Iterate over all tokens for font sizes and weights
-  dictionary.allTokens.forEach(function (token) {
-    const tokenType = token.path[0]; // Get the token type (e.g., font)
-    const tokenCategory = token.path[1]; // Get the category (e.g., size, weight)
-    const tokenShade = token.path[2]; // Get the size or weight (e.g., 100, 200, 300)
-
-    // Check each utility definition for font sizes and weights
-    fontUtilities.forEach(function (utility) {
-      if (tokenType === utility.tokenType && tokenCategory === utility.name.split('-')[1]) {
-        // Create utility class name with the correct size or weight identifier
-        const utilityClass = `u-${utility.name}--${tokenShade}`; // Create utility class name
-
-        // Use the correct value based on the token's original value
-        const tokenValue = token.original["$value"];
-        output += `.${utilityClass} { ${utility.CSSprop}: ${tokenValue}; }\n`;
-      }
-    });
-  });
-
-  return output;
-};
-
-// Initialize Style Dictionary with the utility class formats
-const myStyleDictionary = new StyleDictionary({
-  source: tokenFiles,
+const sd = new StyleDictionary({
+  source: ['src/tokens/base/**/*.tokens'],
+  preprocessors: ['tokens-studio'],
   platforms: {
     css: {
       transformGroup: 'css',
       buildPath: 'build/css/',
       files: [
         {
-          destination: 'utility.css',
-          format: 'utilityClass' // For spacing utilities
+          destination: 'utilities-spacing.css',
+          format: 'css/utility-spacing'
         },
         {
-          destination: 'color-utility.css',
-          format: 'colorUtilityClass' // For color utilities
+          destination: 'utilities-color.css',
+          format: 'css/utility-color'
         },
         {
-          destination: 'font-utility.css',
-          format: 'fontUtilityClass' // For font utilities
+          destination: 'utilities-font-size.css',
+          format: 'css/utility-font-size'
+        },
+        {
+          destination: 'utilities-font-weight.css',
+          format: 'css/utility-font-weight'
+        },
+        {
+          destination: 'utilities-font-family.css',
+          format: 'css/utility-font-family'
         }
       ]
     }
   }
 });
 
-// Build all platforms
-myStyleDictionary.buildAllPlatforms();
-console.log('Build completed!');
+await sd.buildAllPlatforms();
