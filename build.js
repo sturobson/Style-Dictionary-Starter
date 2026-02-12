@@ -1,95 +1,68 @@
-import StyleDictionary from 'style-dictionary';
-import { utilityConfig } from './config/utilities.js';
+import { createStyleDictionary } from './style-dictionary-config.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
 
-// Helper function to create utility format
-function createUtilityFormat(configKey, tokenPath, title) {
-  return function({ dictionary }) {
-    let output = `/* ${title} */\n\n`;
+dotenv.config();
 
-    utilityConfig[configKey].forEach(util => {
-      dictionary.allTokens
-        .filter(token => {
-          // Handle both single path (spacing, color) and nested paths (font.size, font.weight)
-          if (tokenPath.length === 1) {
-            return token.path[0] === tokenPath[0];
-          }
-          return token.path[0] === tokenPath[0] && token.path[1] === tokenPath[1];
-        })
-        .forEach(token => {
-          // Build class name
-          let tokenName;
-          if (tokenPath[0] === 'color') {
-            tokenName = token.path.slice(1).join('-');
-          } else {
-            tokenName = token.path[token.path.length - 1];
-          }
-          
-          const className = `${util.prefix}-${tokenName}`;
-          output += `.${className} {\n  ${util.property}: ${token.$value};\n}\n\n`;
-        });
-    });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-    return output;
-  };
-}
+const notionDatabaseId = process.env.NOTION_DATABASE_ID;
 
-// Register all formats using the helper
-StyleDictionary.registerFormat({
-  name: 'css/utility-spacing',
-  format: createUtilityFormat('spacing', ['spacing'], 'Spacing Utilities')
-});
+/**
+ * Add Notion metadata comment to generated files
+ */
+function addNotionHeader(filePath) {
+  const notionUrl = `https://www.notion.so/${notionDatabaseId}`;
+  const header = `/**
+ * Do not edit directly, this file was auto-generated.
+ * 
+ * Generated from Notion Design Tokens
+ * Database: ${notionUrl}
+ * Last updated: ${new Date().toISOString()}
+ */\n\n`;
 
-StyleDictionary.registerFormat({
-  name: 'css/utility-color',
-  format: createUtilityFormat('color', ['color'], 'Color Utilities')
-});
+  const content = fs.readFileSync(filePath, 'utf-8');
+  const lines = content.split('\n');
 
-StyleDictionary.registerFormat({
-  name: 'css/utility-font-size',
-  format: createUtilityFormat('fontSize', ['font', 'size'], 'Font Size Utilities')
-});
+  // Remove all comment blocks at the top of the file
+  let contentStartIndex = 0;
+  let inComment = false;
 
-StyleDictionary.registerFormat({
-  name: 'css/utility-font-weight',
-  format: createUtilityFormat('fontWeight', ['font', 'weight'], 'Font Weight Utilities')
-});
-
-StyleDictionary.registerFormat({
-  name: 'css/utility-font-family',
-  format: createUtilityFormat('fontFamily', ['font', 'family'], 'Font Family Utilities')
-});
-
-const sd = new StyleDictionary({
-  source: ['src/tokens/base/**/*.tokens'],
-  preprocessors: ['tokens-studio'],
-  platforms: {
-    css: {
-      transformGroup: 'css',
-      buildPath: 'build/css/',
-      files: [
-        {
-          destination: 'utilities-spacing.css',
-          format: 'css/utility-spacing'
-        },
-        {
-          destination: 'utilities-color.css',
-          format: 'css/utility-color'
-        },
-        {
-          destination: 'utilities-font-size.css',
-          format: 'css/utility-font-size'
-        },
-        {
-          destination: 'utilities-font-weight.css',
-          format: 'css/utility-font-weight'
-        },
-        {
-          destination: 'utilities-font-family.css',
-          format: 'css/utility-font-family'
-        }
-      ]
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].includes('/**')) {
+      inComment = true;
+    }
+    if (inComment && lines[i].includes('*/')) {
+      contentStartIndex = i + 1;
+      // Skip empty lines after comment
+      while (contentStartIndex < lines.length && lines[contentStartIndex].trim() === '') {
+        contentStartIndex++;
+      }
+      break;
     }
   }
-});
 
-await sd.buildAllPlatforms();
+  const newContent = header + lines.slice(contentStartIndex).join('\n').trimStart();
+  fs.writeFileSync(filePath, newContent, 'utf-8');
+}
+
+async function build() {
+  console.log('🏗️  Building with Style Dictionary...\n');
+
+  // Create configured Style Dictionary instance
+  const sd = createStyleDictionary();
+
+  // Build all platforms
+  await sd.buildAllPlatforms();
+
+  // Add Notion metadata to generated files
+  addNotionHeader(path.join(__dirname, 'build/css/variables.css'));
+  addNotionHeader(path.join(__dirname, 'build/scss/_variables.scss'));
+
+  console.log('\n✅ Build complete!');
+}
+
+build().catch(console.error);

@@ -1,25 +1,24 @@
 {
-  "name": "style-dictionary-starter",
-  "version": "0.1.0",
+  "name": "notion-style-dictionary-tokens",
+  "version": "1.0.0",
   "type": "module",
-  "description": "A Style Dictionary - Design Tokens Starter",
-  "main": "index.js",
+  "description": "Sync design tokens from Notion with Style Dictionary",
+  "main": "build.js",
   "scripts": {
-    "clean": "rm -rf build",
-    "build": "npm run clean && node build.js --verbose"
+    "sync": "node fetch-tokens.js",
+    "push": "node push-tokens.js",
+    "build": "node build.js",
+    "sync:build": "npm run sync && npm run build",
+    "watch": "nodemon --watch tokens -e json --exec npm run build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sturobson/Style-Dictionary-Starter.git"
   },
   "keywords": [
-    "design",
-    "tokens",
-    "style",
-    "dictionary",
-    "css",
-    "design",
-    "systems"
+    "design-tokens",
+    "style-dictionary",
+    "notion"
   ],
   "author": "Stuart Robson",
   "license": "MIT",
@@ -28,10 +27,9 @@
   },
   "homepage": "https://github.com/sturobson/Style-Dictionary-Starter#readme",
   "devDependencies": {
-    "style-dictionary": "^4.1.4"
-  },
-  "dependencies": {
-    "chroma-js": "^3.1.2",
-    "glob": "^11.0.0"
+    "@notionhq/client": "^2.2.15",
+    "style-dictionary": "^4.1.4",
+    "nodemon": "^3.0.0",
+    "dotenv": "^16.3.1"
   }
 }

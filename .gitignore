@@ -3,3 +3,6 @@
 *.sass.map
 *.scss.map
 node_modules/
+.env
+.env.local
+.env.*.local
