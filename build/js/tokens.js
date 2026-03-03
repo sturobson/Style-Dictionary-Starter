@@ -2,6 +2,29 @@
  * Do not edit directly, this file was auto-generated.
  */
 
+export const CopyButtonPrimaryLabel = "Continue";
+export const CopyButtonSecondaryLabel = "Cancel";
+export const CopyButtonSubmitLabel = "Submit";
+export const CopyButtonDeleteLabel = "Delete";
+export const CopyButtonDeleteConfirm = "Are you sure you want to delete this item?";
+export const CopyErrorValidationRequired = "This field is required";
+export const CopyErrorValidationEmailInvalid = "Please enter a valid email address";
+export const CopyErrorValidationPasswordTooShort = "Password must be at least 8 characters";
+export const CopyErrorValidationPasswordMismatch = "Passwords do not match";
+export const CopyErrorSystemGeneric = "Something went wrong. Please try again.";
+export const CopyErrorSystemNetwork = "Unable to connect. Please check your internet connection.";
+export const CopyFeedbackSuccessSave = "Your changes have been saved";
+export const CopyFeedbackSuccessDelete = "Item deleted successfully";
+export const CopyFeedbackLoadingDefault = "Loading...";
+export const CopyFeedbackLoadingSaving = "Saving your changes...";
+export const CopyFeedbackEmptyStateNoResults = "No results found";
+export const CopyFeedbackEmptyStateNoItems = "You don't have any items yet";
+export const CopyFormInputEmailLabel = "Email address";
+export const CopyFormInputEmailPlaceholder = "you@example.com";
+export const CopyFormInputEmailHint = "We'll never share your email with anyone else";
+export const CopyFormInputPasswordLabel = "Password";
+export const CopyFormInputPasswordPlaceholder = "Enter your password";
+export const CopyFormInputPasswordHint = "Must be at least 8 characters";
 export const TypographySizeXl = "20px";
 export const TypographySize4xl = "36px";
 export const TypographySizeLg = "18px";

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microcopy Tokens Example - Sign Up Form</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: #f5f5f5;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #333;
+      font-size: 0.95rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid #ddd;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #0066cc;
+    }
+
+    input[aria-invalid="true"] {
+      border-color: #d32f2f;
+    }
+
+    small {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    .error-message {
+      display: none;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background-color: #ffebee;
+      border: 1px solid #ef5350;
+      border-radius: 4px;
+      color: #d32f2f;
+      font-size: 0.95rem;
+    }
+
+    .error-message.visible {
+      display: block;
+    }
+
+    .success-message {
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background-color: #e8f5e9;
+      border: 1px solid #66bb6a;
+      border-radius: 4px;
+      color: #2e7d32;
+      font-size: 0.95rem;
+    }
+
+    .form-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    button {
+      padding: 0.75rem 1rem;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn-primary {
+      background-color: #0066cc;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #0052a3;
+    }
+
+    .btn-secondary {
+      background-color: #e0e0e0;
+      color: #333;
+    }
+
+    .btn-secondary:hover {
+      background-color: #d0d0d0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Sign Up</h1>
+    <form class="signup-form">
+      <div class="form-group">
+        <label for="email" id="email-label">Email address</label>
+        <input id="email" type="email" name="email" placeholder="you@example.com" aria-describedby="email-hint"
+          required>
+        <small id="email-hint">We'll never share your email with anyone else</small>
+      </div>
+
+      <div class="form-group">
+        <label for="password" id="password-label">Password</label>
+        <input id="password" type="password" name="password" placeholder="Enter your password"
+          aria-describedby="password-hint" required>
+        <small id="password-hint">Must be at least 8 characters</small>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">Submit</button>
+        <button type="button" class="btn-secondary">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <script type="module">
+    // This is a placeholder showing how the form-controller would be used
+    // In a real app with build tools, you would import it like:
+    // import { FormController } from './form-controller.js';
+    console.log('Form ready. In production, import FormController from form-controller.js');
+  </script>
+</body>
+
+</html>

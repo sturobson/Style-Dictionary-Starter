@@ -1,0 +1,54 @@
+{
+  "copy": {
+    "feedback": {
+      "success": {
+        "save": {
+          "$value": "Your changes have been saved",
+          "$type": "string",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": { "enabled": true }
+          }
+        },
+        "delete": {
+          "$value": "Item deleted successfully",
+          "$type": "string",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": { "enabled": true }
+          }
+        }
+      },
+      "loading": {
+        "default": {
+          "$value": "Loading...",
+          "$type": "string",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": { "enabled": true }
+          }
+        },
+        "saving": {
+          "$value": "Saving your changes...",
+          "$type": "string",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": { "enabled": true }
+          }
+        }
+      },
+      "emptyState": {
+        "noResults": {
+          "$value": "No results found",
+          "$type": "string",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": { "enabled": true }
+          }
+        },
+        "noItems": {
+          "$value": "You don't have any items yet",
+          "$type": "string",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": { "enabled": true }
+          }
+        }
+      }
+    }
+  }
+}

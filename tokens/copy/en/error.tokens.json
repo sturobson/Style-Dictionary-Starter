@@ -1,0 +1,56 @@
+{
+  "copy": {
+    "error": {
+      "validation": {
+        "required": {
+          "$value": "This field is required",
+          "$type": "string",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": { "enabled": true }
+          }
+        },
+        "email": {
+          "invalid": {
+            "$value": "Please enter a valid email address",
+            "$type": "string",
+            "$extensions": {
+              "com.alwaystwisted.microcopy": { "enabled": true }
+            }
+          }
+        },
+        "password": {
+          "tooShort": {
+            "$value": "Password must be at least 8 characters",
+            "$type": "string",
+            "$extensions": {
+              "com.alwaystwisted.microcopy": { "enabled": true }
+            }
+          },
+          "mismatch": {
+            "$value": "Passwords do not match",
+            "$type": "string",
+            "$extensions": {
+              "com.alwaystwisted.microcopy": { "enabled": true }
+            }
+          }
+        }
+      },
+      "system": {
+        "generic": {
+          "$value": "Something went wrong. Please try again.",
+          "$type": "string",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": { "enabled": true }
+          }
+        },
+        "network": {
+          "$value": "Unable to connect. Please check your internet connection.",
+          "$type": "string",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": { "enabled": true }
+          }
+        }
+      }
+    }
+  }
+}

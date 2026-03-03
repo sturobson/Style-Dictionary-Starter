@@ -3,11 +3,34 @@
  * 
  * Generated from Notion Design Tokens
  * Database: https://www.notion.so/eea30a3320aa445ea7c73fd91f3083df
- * Last updated: 2026-02-12T13:47:09.900Z
+ * Last updated: 2026-03-03T10:21:30.686Z
  */
 
 // Do not edit directly, this file was auto-generated.
 
+$copy-button-primary-label: Continue; // Primary action button label
+$copy-button-secondary-label: Cancel;
+$copy-button-submit-label: Submit;
+$copy-button-delete-label: Delete;
+$copy-button-delete-confirm: Are you sure you want to delete this item?;
+$copy-error-validation-required: This field is required;
+$copy-error-validation-email-invalid: Please enter a valid email address;
+$copy-error-validation-password-too-short: Password must be at least 8 characters;
+$copy-error-validation-password-mismatch: Passwords do not match;
+$copy-error-system-generic: Something went wrong. Please try again.;
+$copy-error-system-network: Unable to connect. Please check your internet connection.;
+$copy-feedback-success-save: Your changes have been saved;
+$copy-feedback-success-delete: Item deleted successfully;
+$copy-feedback-loading-default: Loading...;
+$copy-feedback-loading-saving: Saving your changes...;
+$copy-feedback-empty-state-no-results: No results found;
+$copy-feedback-empty-state-no-items: You don't have any items yet;
+$copy-form-input-email-label: Email address;
+$copy-form-input-email-placeholder: you@example.com;
+$copy-form-input-email-hint: We'll never share your email with anyone else;
+$copy-form-input-password-label: Password;
+$copy-form-input-password-placeholder: Enter your password;
+$copy-form-input-password-hint: Must be at least 8 characters;
 $typography-size-xl: 20px; // Extra large font size
 $typography-size-4xl: 36px; // Extra large heading size
 $typography-size-lg: 18px; // Large font size
