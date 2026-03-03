@@ -1,0 +1,63 @@
+{
+  "copy": {
+    "button": {
+      "primary": {
+        "label": "Continue"
+      },
+      "secondary": {
+        "label": "Cancel"
+      },
+      "submit": {
+        "label": "Submit"
+      },
+      "delete": {
+        "label": "Delete",
+        "confirm": "Are you sure you want to delete this item?"
+      }
+    },
+    "error": {
+      "validation": {
+        "required": "This field is required",
+        "email": {
+          "invalid": "Please enter a valid email address"
+        },
+        "password": {
+          "tooShort": "Password must be at least 8 characters",
+          "mismatch": "Passwords do not match"
+        }
+      },
+      "system": {
+        "generic": "Something went wrong. Please try again.",
+        "network": "Unable to connect. Please check your internet connection."
+      }
+    },
+    "feedback": {
+      "success": {
+        "save": "Your changes have been saved",
+        "delete": "Item deleted successfully"
+      },
+      "loading": {
+        "default": "Loading...",
+        "saving": "Saving your changes..."
+      },
+      "emptyState": {
+        "noResults": "No results found",
+        "noItems": "You don't have any items yet"
+      }
+    },
+    "form": {
+      "input": {
+        "email": {
+          "label": "Email address",
+          "placeholder": "you@example.com",
+          "hint": "We'll never share your email with anyone else"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Enter your password",
+          "hint": "Must be at least 8 characters"
+        }
+      }
+    }
+  }
+}

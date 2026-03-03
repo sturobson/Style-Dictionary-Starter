@@ -1,86 +1,145 @@
 import StyleDictionary from 'style-dictionary';
 
 /**
- * Register custom format for microcopy tokens
- * Filters tokens with microcopy extension and outputs a nested JavaScript object
+ * Filter function to identify microcopy tokens
  */
-function registerMicrocopyFormat() {
+function isMicrocopyToken(token) {
+  return token.$extensions &&
+    token.$extensions['com.alwaystwisted.microcopy'] &&
+    token.$extensions['com.alwaystwisted.microcopy'].enabled;
+}
+
+/**
+ * Build nested object from flat token paths
+ */
+function buildNestedObject(tokens) {
+  const result = {};
+
+  tokens.forEach(token => {
+    const path = token.path;
+    let current = result;
+
+    path.forEach((key, index) => {
+      if (index === path.length - 1) {
+        current[key] = token.$value;
+      } else {
+        current[key] = current[key] || {};
+        current = current[key];
+      }
+    });
+  });
+
+  return result;
+}
+
+/**
+ * Register custom formats for microcopy tokens
+ */
+function registerMicrocopyFormats() {
+  // JavaScript/ES6 format
   StyleDictionary.registerFormat({
     name: 'javascript/microcopy',
     format: async function ({ dictionary }) {
-      // Filter for tokens with our microcopy extension
-      const microcopyTokens = dictionary.allTokens.filter(token => {
-        return token.$extensions &&
-          token.$extensions['com.alwaystwisted.microcopy'] &&
-          token.$extensions['com.alwaystwisted.microcopy'].enabled;
-      });
+      const microcopyTokens = dictionary.allTokens.filter(isMicrocopyToken);
+      const nested = buildNestedObject(microcopyTokens);
+      return `export const microcopy = ${JSON.stringify(nested, null, 2)};`;
+    }
+  });
 
-      // Build nested object matching token paths
-      const buildNestedObject = (tokens) => {
-        const result = {};
+  // JSON format for use in other systems
+  StyleDictionary.registerFormat({
+    name: 'json/microcopy',
+    format: async function ({ dictionary }) {
+      const microcopyTokens = dictionary.allTokens.filter(isMicrocopyToken);
+      const nested = buildNestedObject(microcopyTokens);
+      return JSON.stringify(nested, null, 2);
+    }
+  });
 
-        tokens.forEach(token => {
-          const path = token.path;
-          let current = result;
+  // Nunjucks template variables
+  StyleDictionary.registerFormat({
+    name: 'nunjucks/microcopy',
+    format: async function ({ dictionary }) {
+      const microcopyTokens = dictionary.allTokens.filter(isMicrocopyToken);
+      
+      return microcopyTokens
+        .map(token => {
+          const name = token.path.join('_').toUpperCase();
+          const value = token.$value.replace(/"/g, '\\"');
+          return `{% set ${name} = "${value}" %}`;
+        })
+        .join('\n');
+    }
+  });
 
-          path.forEach((key, index) => {
-            if (index === path.length - 1) {
-              current[key] = token.$value;
-            } else {
-              current[key] = current[key] || {};
-              current = current[key];
-            }
-          });
-        });
+  // TypeScript interface format
+  StyleDictionary.registerFormat({
+    name: 'typescript/microcopy-interface',
+    format: async function ({ dictionary }) {
+      const microcopyTokens = dictionary.allTokens.filter(isMicrocopyToken);
+      const structure = buildNestedObject(microcopyTokens);
 
+      const jsonToInterface = (obj, indent = 0) => {
+        const spaces = '  '.repeat(indent);
+        let result = '{\n';
+
+        for (const [key, value] of Object.entries(obj)) {
+          if (typeof value === 'string') {
+            result += `${spaces}  ${key}: string;\n`;
+          } else {
+            result += `${spaces}  ${key}: ${jsonToInterface(value, indent + 1)};\n`;
+          }
+        }
+
+        result += `${spaces}}`;
         return result;
       };
 
-      const nested = buildNestedObject(microcopyTokens);
-      return `export const microcopy = ${JSON.stringify(nested, null, 2)};`;
+      return `export interface Microcopy ${jsonToInterface(structure)}\n\n` +
+        `export const microcopy: Microcopy;`;
     }
   });
 }
 
 /**
- * Style Dictionary configuration for Notion-based design tokens
- * This configuration defines how tokens are transformed and built for different platforms
+ * Style Dictionary configuration for microcopy tokens
+ * Generates interface copy tokens in multiple formats for different platforms
  */
 export function createStyleDictionaryConfig() {
   return {
-    source: ['tokens/**/*.json'],
+    source: ['tokens/copy/**/*.json'],
     platforms: {
-      css: {
-        transformGroup: 'css',
-        buildPath: 'build/css/',
-        files: [
-          {
-            destination: 'variables.css',
-            format: 'css/variables'
-          }
-        ]
-      },
-      scss: {
-        transformGroup: 'scss',
-        buildPath: 'build/scss/',
-        files: [
-          {
-            destination: '_variables.scss',
-            format: 'scss/variables'
-          }
-        ]
-      },
       js: {
         transformGroup: 'js',
         buildPath: 'build/js/',
         files: [
           {
-            destination: 'tokens.js',
-            format: 'javascript/es6'
-          },
-          {
             destination: 'microcopy.js',
             format: 'javascript/microcopy'
+          },
+          {
+            destination: 'microcopy.json',
+            format: 'json/microcopy'
+          }
+        ]
+      },
+      nunjucks: {
+        transformGroup: 'js',
+        buildPath: 'build/nunjucks/',
+        files: [
+          {
+            destination: 'microcopy.njk',
+            format: 'nunjucks/microcopy'
+          }
+        ]
+      },
+      typescript: {
+        transformGroup: 'js',
+        buildPath: 'build/ts/',
+        files: [
+          {
+            destination: 'microcopy.d.ts',
+            format: 'typescript/microcopy-interface'
           }
         ]
       }
@@ -92,7 +151,7 @@ export function createStyleDictionaryConfig() {
  * Create and return a configured Style Dictionary instance
  */
 export function createStyleDictionary() {
-  registerMicrocopyFormat();
+  registerMicrocopyFormats();
   const config = createStyleDictionaryConfig();
   return new StyleDictionary(config);
 }
