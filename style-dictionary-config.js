@@ -61,7 +61,7 @@ function registerMicrocopyFormats() {
     name: 'nunjucks/microcopy',
     format: async function ({ dictionary }) {
       const microcopyTokens = dictionary.allTokens.filter(isMicrocopyToken);
-      
+
       return microcopyTokens
         .map(token => {
           const name = token.path.join('_').toUpperCase();
