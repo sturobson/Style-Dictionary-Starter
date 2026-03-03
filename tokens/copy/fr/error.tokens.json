@@ -1,0 +1,70 @@
+{
+  "copy": {
+    "error": {
+      "validation": {
+        "required": {
+          "$value": "Ce champ est obligatoire",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": { "enabled": true }
+          }
+        },
+        "email": {
+          "invalid": {
+            "$value": "Veuillez entrer une adresse e-mail valide",
+            "$extensions": {
+              "com.alwaystwisted.microcopy": { "enabled": true }
+            }
+          }
+        },
+        "password": {
+          "tooShort": {
+            "$value": "Le mot de passe doit contenir au moins 8 caractères",
+            "$extensions": {
+              "com.alwaystwisted.microcopy": { "enabled": true }
+            }
+          },
+          "mismatch": {
+            "$value": "Les mots de passe ne correspondent pas",
+            "$extensions": {
+              "com.alwaystwisted.microcopy": { "enabled": true }
+            }
+          }
+        }
+      },
+      "system": {
+        "generic": {
+          "$value": "Une erreur s'est produite. Veuillez réessayer.",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": { "enabled": true }
+          }
+        },
+        "network": {
+          "$value": "Impossible de se connecter. Veuillez vérifier votre connexion Internet.",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": { "enabled": true }
+          }
+        }
+      },
+      "state": {
+        "saveSuccess": {
+          "$value": "Vos modifications ont été enregistrées",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": { "enabled": true }
+          }
+        },
+        "loading": {
+          "$value": "Chargement...",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": { "enabled": true }
+          }
+        },
+        "empty": {
+          "$value": "Aucun résultat trouvé",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": { "enabled": true }
+          }
+        }
+      }
+    }
+  }
+}

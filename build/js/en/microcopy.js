@@ -14,20 +14,6 @@ export const microcopy = {
       "confirm": "Are you sure you want to delete this item?"
     }
   },
-  "form": {
-    "input": {
-      "email": {
-        "label": "Email address",
-        "placeholder": "you@example.com",
-        "hint": "We'll never share your email with anyone else"
-      },
-      "password": {
-        "label": "Password",
-        "placeholder": "Enter your password",
-        "hint": "Must be at least 8 characters"
-      }
-    }
-  },
   "error": {
     "validation": {
       "required": "This field is required",
@@ -47,6 +33,20 @@ export const microcopy = {
       "saveSuccess": "Your changes have been saved",
       "loading": "Loading...",
       "empty": "No results found"
+    }
+  },
+  "form": {
+    "input": {
+      "email": {
+        "label": "Email address",
+        "placeholder": "you@example.com",
+        "hint": "We'll never share your email with anyone else"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password",
+        "hint": "Must be at least 8 characters"
+      }
     }
   }
 };

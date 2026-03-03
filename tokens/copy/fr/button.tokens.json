@@ -1,0 +1,63 @@
+{
+  "copy": {
+    "button": {
+      "primary": {
+        "label": {
+          "$value": "Continuer",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": {
+              "enabled": true,
+              "category": "button",
+              "context": "primary-action"
+            }
+          }
+        }
+      },
+      "secondary": {
+        "label": {
+          "$value": "Annuler",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": {
+              "enabled": true,
+              "category": "button",
+              "context": "secondary-action"
+            }
+          }
+        }
+      },
+      "submit": {
+        "label": {
+          "$value": "Soumettre",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": {
+              "enabled": true,
+              "category": "button"
+            }
+          }
+        }
+      },
+      "delete": {
+        "label": {
+          "$value": "Supprimer",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": {
+              "enabled": true,
+              "category": "button",
+              "context": "destructive"
+            }
+          }
+        },
+        "confirm": {
+          "$value": "Êtes-vous sûr de vouloir supprimer cet élément?",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": {
+              "enabled": true,
+              "category": "button",
+              "context": "destructive-confirm"
+            }
+          }
+        }
+      }
+    }
+  }
+}
