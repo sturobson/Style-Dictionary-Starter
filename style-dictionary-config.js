@@ -72,34 +72,8 @@ function registerMicrocopyFormats() {
     }
   });
 
-  // TypeScript interface format
-  StyleDictionary.registerFormat({
-    name: 'typescript/microcopy-interface',
-    format: async function ({ dictionary }) {
-      const microcopyTokens = dictionary.allTokens.filter(isMicrocopyToken);
-      const structure = buildNestedObject(microcopyTokens);
-
-      const jsonToInterface = (obj, indent = 0) => {
-        const spaces = '  '.repeat(indent);
-        let result = '{\n';
-
-        for (const [key, value] of Object.entries(obj)) {
-          if (typeof value === 'string') {
-            result += `${spaces}  ${key}: string;\n`;
-          } else {
-            result += `${spaces}  ${key}: ${jsonToInterface(value, indent + 1)};\n`;
-          }
-        }
-
-        result += `${spaces}}`;
-        return result;
-      };
-
-      return `export interface Microcopy ${jsonToInterface(structure)}\n\n` +
-        `export const microcopy: Microcopy;`;
-    }
-  });
 }
+
 
 /**
  * Style Dictionary configuration for microcopy tokens
@@ -130,16 +104,6 @@ export function createStyleDictionaryConfig() {
           {
             destination: 'microcopy.njk',
             format: 'nunjucks/microcopy'
-          }
-        ]
-      },
-      typescript: {
-        transformGroup: 'js',
-        buildPath: 'build/ts/',
-        files: [
-          {
-            destination: 'microcopy.d.ts',
-            format: 'typescript/microcopy-interface'
           }
         ]
       }
