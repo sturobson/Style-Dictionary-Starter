@@ -1,43 +1,45 @@
 {
-  "form": {
-    "input": {
-      "email": {
-        "label": {
-          "$value": "Email address",
-          "$extensions": {
-            "com.alwaystwisted.microcopy": { "enabled": true }
+  "copy": {
+    "form": {
+      "input": {
+        "email": {
+          "label": {
+            "$value": "Email address",
+            "$extensions": {
+              "com.alwaystwisted.microcopy": { "enabled": true }
+            }
+          },
+          "placeholder": {
+            "$value": "you@example.com",
+            "$extensions": {
+              "com.alwaystwisted.microcopy": { "enabled": true }
+            }
+          },
+          "hint": {
+            "$value": "We'll never share your email with anyone else",
+            "$extensions": {
+              "com.alwaystwisted.microcopy": { "enabled": true }
+            }
           }
         },
-        "placeholder": {
-          "$value": "you@example.com",
-          "$extensions": {
-            "com.alwaystwisted.microcopy": { "enabled": true }
-          }
-        },
-        "hint": {
-          "$value": "We'll never share your email with anyone else",
-          "$extensions": {
-            "com.alwaystwisted.microcopy": { "enabled": true }
-          }
-        }
-      },
-      "password": {
-        "label": {
-          "$value": "Password",
-          "$extensions": {
-            "com.alwaystwisted.microcopy": { "enabled": true }
-          }
-        },
-        "placeholder": {
-          "$value": "Enter your password",
-          "$extensions": {
-            "com.alwaystwisted.microcopy": { "enabled": true }
-          }
-        },
-        "hint": {
-          "$value": "Must be at least 8 characters",
-          "$extensions": {
-            "com.alwaystwisted.microcopy": { "enabled": true }
+        "password": {
+          "label": {
+            "$value": "Password",
+            "$extensions": {
+              "com.alwaystwisted.microcopy": { "enabled": true }
+            }
+          },
+          "placeholder": {
+            "$value": "Enter your password",
+            "$extensions": {
+              "com.alwaystwisted.microcopy": { "enabled": true }
+            }
+          },
+          "hint": {
+            "$value": "Must be at least 8 characters",
+            "$extensions": {
+              "com.alwaystwisted.microcopy": { "enabled": true }
+            }
           }
         }
       }

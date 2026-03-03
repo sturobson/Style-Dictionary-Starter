@@ -1,22 +1,18 @@
 import StyleDictionary from 'style-dictionary';
 
-/**
- * Filter function to identify microcopy tokens
- */
-function isMicrocopyToken(token) {
-  return token.$extensions &&
-    token.$extensions['com.alwaystwisted.microcopy'] &&
-    token.$extensions['com.alwaystwisted.microcopy'].enabled;
-}
+const getMicrocopyTokens = (dictionary) => {
+  return dictionary.allTokens.filter(token => {
+    return token.$extensions &&
+      token.$extensions['com.alwaystwisted.microcopy'] &&
+      token.$extensions['com.alwaystwisted.microcopy'].enabled;
+  });
+};
 
-/**
- * Build nested object from flat token paths
- */
-function buildNestedObject(tokens) {
+const buildNestedObject = (tokens) => {
   const result = {};
 
   tokens.forEach(token => {
-    const path = token.path;
+    const path = token.path.slice(1); // Skip 'copy' from path
     let current = result;
 
     path.forEach((key, index) => {
@@ -30,92 +26,42 @@ function buildNestedObject(tokens) {
   });
 
   return result;
-}
+};
 
-/**
- * Register custom formats for microcopy tokens
- */
-function registerMicrocopyFormats() {
-  // JavaScript/ES6 format
-  StyleDictionary.registerFormat({
-    name: 'javascript/microcopy',
-    format: async function ({ dictionary }) {
-      const microcopyTokens = dictionary.allTokens.filter(isMicrocopyToken);
-      const nested = buildNestedObject(microcopyTokens);
-      return `export const microcopy = ${JSON.stringify(nested, null, 2)};`;
+StyleDictionary.registerFormat({
+  name: 'javascript/microcopy',
+  format: function ({ dictionary }) {
+    const nested = buildNestedObject(getMicrocopyTokens(dictionary));
+    return `export const microcopy = ${JSON.stringify(nested, null, 2)};`;
+  }
+});
+
+StyleDictionary.registerFormat({
+  name: 'json/microcopy',
+  format: function ({ dictionary }) {
+    const nested = buildNestedObject(getMicrocopyTokens(dictionary));
+    return JSON.stringify(nested, null, 2);
+  }
+});
+
+export default {
+  source: ['tokens/**/*.tokens.json'],
+  platforms: {
+    js: {
+      transformGroup: 'js',
+      buildPath: 'build/js/',
+      files: [{
+        destination: 'microcopy.js',
+        format: 'javascript/microcopy'
+      }]
+    },
+    json: {
+      transformGroup: 'js',
+      buildPath: 'build/json/',
+      files: [{
+        destination: 'microcopy.json',
+        format: 'json/microcopy'
+      }]
     }
-  });
-
-  // JSON format for use in other systems
-  StyleDictionary.registerFormat({
-    name: 'json/microcopy',
-    format: async function ({ dictionary }) {
-      const microcopyTokens = dictionary.allTokens.filter(isMicrocopyToken);
-      const nested = buildNestedObject(microcopyTokens);
-      return JSON.stringify(nested, null, 2);
-    }
-  });
-
-  // Nunjucks template variables
-  StyleDictionary.registerFormat({
-    name: 'nunjucks/microcopy',
-    format: async function ({ dictionary }) {
-      const microcopyTokens = dictionary.allTokens.filter(isMicrocopyToken);
-
-      return microcopyTokens
-        .map(token => {
-          const name = token.path.join('_').toUpperCase();
-          const value = token.$value.replace(/"/g, '\\"');
-          return `{% set ${name} = "${value}" %}`;
-        })
-        .join('\n');
-    }
-  });
-
-}
-
-
-/**
- * Style Dictionary configuration for microcopy tokens
- * Generates interface copy tokens in multiple formats for different platforms
- */
-export function createStyleDictionaryConfig() {
-  return {
-    source: ['tokens/copy/**/*.json'],
-    platforms: {
-      js: {
-        transformGroup: 'js',
-        buildPath: 'build/js/',
-        files: [
-          {
-            destination: 'microcopy.js',
-            format: 'javascript/microcopy'
-          },
-          {
-            destination: 'microcopy.json',
-            format: 'json/microcopy'
-          }
-        ]
-      },
-      nunjucks: {
-        transformGroup: 'js',
-        buildPath: 'build/nunjucks/',
-        files: [
-          {
-            destination: 'microcopy.njk',
-            format: 'nunjucks/microcopy'
-          }
-        ]
-      }
-    }
-  };
-}
-
-/**
- * Create and return a configured Style Dictionary instance
- */
-export function createStyleDictionary() {
-  registerMicrocopyFormats();
-  const config = createStyleDictionaryConfig();
-  return new StyleDictionary(config);
-}
+  }
+};

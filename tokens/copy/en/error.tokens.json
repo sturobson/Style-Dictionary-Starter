@@ -1,66 +1,68 @@
 {
-  "error": {
-    "validation": {
-      "required": {
-        "$value": "This field is required",
-        "$extensions": {
-          "com.alwaystwisted.microcopy": { "enabled": true }
-        }
-      },
-      "email": {
-        "invalid": {
-          "$value": "Please enter a valid email address",
-          "$extensions": {
-            "com.alwaystwisted.microcopy": { "enabled": true }
-          }
-        }
-      },
-      "password": {
-        "tooShort": {
-          "$value": "Password must be at least 8 characters",
+  "copy": {
+    "error": {
+      "validation": {
+        "required": {
+          "$value": "This field is required",
           "$extensions": {
             "com.alwaystwisted.microcopy": { "enabled": true }
           }
         },
-        "mismatch": {
-          "$value": "Passwords do not match",
+        "email": {
+          "invalid": {
+            "$value": "Please enter a valid email address",
+            "$extensions": {
+              "com.alwaystwisted.microcopy": { "enabled": true }
+            }
+          }
+        },
+        "password": {
+          "tooShort": {
+            "$value": "Password must be at least 8 characters",
+            "$extensions": {
+              "com.alwaystwisted.microcopy": { "enabled": true }
+            }
+          },
+          "mismatch": {
+            "$value": "Passwords do not match",
+            "$extensions": {
+              "com.alwaystwisted.microcopy": { "enabled": true }
+            }
+          }
+        }
+      },
+      "system": {
+        "generic": {
+          "$value": "Something went wrong. Please try again.",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": { "enabled": true }
+          }
+        },
+        "network": {
+          "$value": "Unable to connect. Please check your internet connection.",
           "$extensions": {
             "com.alwaystwisted.microcopy": { "enabled": true }
           }
         }
-      }
-    },
-    "system": {
-      "generic": {
-        "$value": "Something went wrong. Please try again.",
-        "$extensions": {
-          "com.alwaystwisted.microcopy": { "enabled": true }
-        }
       },
-      "network": {
-        "$value": "Unable to connect. Please check your internet connection.",
-        "$extensions": {
-          "com.alwaystwisted.microcopy": { "enabled": true }
-        }
-      }
-    },
-    "state": {
-      "saveSuccess": {
-        "$value": "Your changes have been saved",
-        "$extensions": {
-          "com.alwaystwisted.microcopy": { "enabled": true }
-        }
-      },
-      "loading": {
-        "$value": "Loading...",
-        "$extensions": {
-          "com.alwaystwisted.microcopy": { "enabled": true }
-        }
-      },
-      "empty": {
-        "$value": "No results found",
-        "$extensions": {
-          "com.alwaystwisted.microcopy": { "enabled": true }
+      "state": {
+        "saveSuccess": {
+          "$value": "Your changes have been saved",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": { "enabled": true }
+          }
+        },
+        "loading": {
+          "$value": "Loading...",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": { "enabled": true }
+          }
+        },
+        "empty": {
+          "$value": "No results found",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": { "enabled": true }
+          }
         }
       }
     }

@@ -1,59 +1,61 @@
 {
-  "button": {
-    "primary": {
-      "label": {
-        "$value": "Continue",
-        "$description": "Primary action button label",
-        "$extensions": {
-          "com.alwaystwisted.microcopy": {
-            "enabled": true,
-            "category": "button",
-            "context": "primary-action"
-          }
-        }
-      }
-    },
-    "secondary": {
-      "label": {
-        "$value": "Cancel",
-        "$extensions": {
-          "com.alwaystwisted.microcopy": {
-            "enabled": true,
-            "category": "button",
-            "context": "secondary-action"
-          }
-        }
-      }
-    },
-    "submit": {
-      "label": {
-        "$value": "Submit",
-        "$extensions": {
-          "com.alwaystwisted.microcopy": {
-            "enabled": true,
-            "category": "button"
-          }
-        }
-      }
-    },
-    "delete": {
-      "label": {
-        "$value": "Delete",
-        "$extensions": {
-          "com.alwaystwisted.microcopy": {
-            "enabled": true,
-            "category": "button",
-            "context": "destructive"
+  "copy": {
+    "button": {
+      "primary": {
+        "label": {
+          "$value": "Continue",
+          "$description": "Primary action button label",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": {
+              "enabled": true,
+              "category": "button",
+              "context": "primary-action"
+            }
           }
         }
       },
-      "confirm": {
-        "$value": "Are you sure you want to delete this item?",
-        "$extensions": {
-          "com.alwaystwisted.microcopy": {
-            "enabled": true,
-            "category": "button",
-            "context": "destructive-confirm"
+      "secondary": {
+        "label": {
+          "$value": "Cancel",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": {
+              "enabled": true,
+              "category": "button",
+              "context": "secondary-action"
+            }
+          }
+        }
+      },
+      "submit": {
+        "label": {
+          "$value": "Submit",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": {
+              "enabled": true,
+              "category": "button"
+            }
+          }
+        }
+      },
+      "delete": {
+        "label": {
+          "$value": "Delete",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": {
+              "enabled": true,
+              "category": "button",
+              "context": "destructive"
+            }
+          }
+        },
+        "confirm": {
+          "$value": "Are you sure you want to delete this item?",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": {
+              "enabled": true,
+              "category": "button",
+              "context": "destructive-confirm"
+            }
           }
         }
       }
