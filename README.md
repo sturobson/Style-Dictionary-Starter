@@ -1,12 +1,21 @@
-# Notion + Style Dictionary Design Tokens
+# Design Tokens Workflow (Part 15) - Using Design Tokens for Microcopy
 
-This project demonstrates syncing design tokens from a Notion database with Style Dictionary to generate platform-specific CSS, Sass, and JavaScript files.
+This project demonstrates managing interface copy (microcopy) as design tokens using Style Dictionary and the DTCG specification's `$extensions` pattern.
+
+Microcopy is the small text throughout your interface—button labels, form hints, error messages, empty states, and confirmations. Instead of scattering this copy throughout your code, manage it like you manage colors and spacing: as tokens.
+
+## What is Microcopy?
+
+Button labels, form hints, error messages, empty states—these aren't just strings. They're design decisions that directly impact how users understand and trust your product.
+
+**Before:** Copy scattered across component files, inconsistent across platforms, impossible to collaborate on.
+
+**After:** Single source of truth, version control, team collaboration, multi-platform consistency.
 
 ## Prerequisites
 
 - Node.js (v16+)
-- A Notion workspace
-- A Notion database with tokens
+- Basic knowledge of design tokens and JSON
 
 ## Setup
 
@@ -16,197 +25,44 @@ This project demonstrates syncing design tokens from a Notion database with Styl
 npm install
 ```
 
-### 2. Create Your Notion Integration
-
-1. Go to [https://www.notion.com/my-integrations](https://www.notion.com/my-integrations)
-2. Click **+ New integration**
-3. Give it a name (e.g., "Design Tokens Sync")
-4. Select your workspace
-5. Under **Capabilities**, make sure "Read content" is checked
-6. Click **Save**
-7. Copy the **Internal Integration Token** (the long string starting with `ntn_`)
-
-### 3. Create Your Notion Database
-
-Create a database in Notion with these exact properties:
-
-| Property Name | Type | Purpose |
-|---------------|------|---------|
-| Name | Title | Token name (e.g., "Primary Blue") |
-| Token Path | Text | JSON path (e.g., "color.brand.primary") |
-| Value | Text | Token value (e.g., "#007bff") |
-| Type | Select | Token type (color, dimension, fontFamily, fontWeight, etc.) |
-| Category | Select | Grouping (brand, semantic, component, foundation, etc.) |
-| Description | Text | What the token is for and when to use it |
-| Status | Select | Draft, Review, Approved, Deprecated |
-
-**Important:** Only tokens with "Approved" status will be synced. This ensures you have a review workflow.
-
-### 4. Get Your Database ID
-
-**This is important—many people get this wrong.**
-
-1. Open your Notion database (the actual table view)
-2. Look at the URL in your browser
-3. It looks like: `https://www.notion.so/abc123def456ghi789jkl?v=xyz&t=123`
-4. Copy the part **before the `?v=`** (just the long hex string)
-5. That's your database ID
-
-### 5. Connect the Integration to Your Database
-
-**This step is critical.** If you skip it, you'll get a "database not found" error.
-
-1. Open your Notion database
-2. Click **•••** in the top right
-3. Scroll to **Connections**
-4. Click **+ Add connections**
-5. Select your integration name
-6. Confirm access
-
-The integration now has permission to read from that database.
-
-### 6. Configure Your Environment
-
-Create or update `.env` in the project root:
-
-```env
-NOTION_TOKEN=ntn_your_integration_token_here
-NOTION_DATABASE_ID=abc123def456ghi789jkl
-```
-
-**Note:** The `.env` file is ignored by git for security.
-
-## Usage
-
-### Sync tokens from Notion only:
-
-```bash
-npm run sync
-```
-
-This fetches all "Approved" tokens from your Notion database and generates `tokens/tokens.json`.
-
-### Push token changes back to Notion:
-
-```bash
-npm run push
-```
-
-If you've edited `tokens/tokens.json` locally and want to update those changes back to your Notion database, this command will:
-- Update existing tokens (matching by Notion ID)
-- Create new tokens that don't exist in Notion yet (with "Draft" status)
-
-This is useful for workflows where developers make token adjustments locally, then push them back for team review.
-
-### Build with Style Dictionary only:
+### 2. Build the Tokens
 
 ```bash
 npm run build
 ```
 
-Generates CSS, Sass, and JavaScript files from existing tokens.
+This generates:
+- `build/js/tokens.js` - Visual design tokens (colors, spacing, typography, etc.)
+- `build/js/microcopy.js` - Interface copy tokens (button labels, messages, hints, etc.)
 
-### Sync and build (recommended):
+## Token Structure
 
-```bash
-npm run sync:build
-```
-
-Pulls latest tokens from Notion, then generates all platform files in one command.
-
-### Watch for changes:
-
-```bash
-npm run watch
-```
-
-Watches the `tokens/` directory and rebuilds whenever tokens change.
-
-## Output
-
-After building, you'll have:
-
-- `build/css/variables.css` - CSS custom properties
-- `build/scss/_variables.scss` - Sass variables  
-- `build/js/tokens.js` - JavaScript ES6 module
-
-Each file includes:
-- A header with the Notion database URL
-- The sync timestamp
-- Inline documentation comments (`/** ... */`)
-
-Example CSS output:
-
-```css
-/**
- * Do not edit directly, this file was auto-generated.
- * 
- * Generated from Notion Design Tokens
- * Database: https://www.notion.so/abc123def456ghi789jkl
- * Last updated: 2026-02-09T16:21:01.600Z
- */
-
-:root {
-  --color-brand-primary: #007bff; /** Primary brand color used for buttons and links */
-  --spacing-base: 8px; /** Base unit for spacing scale (1x) */
-  --typography-size-base: 16px; /** Base font size for body text */
-}
-```
-
-## How It Works
-
-1. **fetch-tokens.js** connects to Notion and fetches all "Approved" tokens
-2. **token-validation.js** validates token data and reports any issues
-3. Tokens are organized into a nested JSON structure matching your Token Path
-4. Notion metadata (status, ID, sync time) is stored in `$extensions` for reference
-5. **build.js** uses **style-dictionary-config.js** to run Style Dictionary and transform the JSON into CSS, Sass, and JS
-6. **push-tokens.js** can sync local changes back to Notion for bidirectional workflows
-
-### Modular Architecture
-
-This example demonstrates good separation of concerns:
-
-- **fetch-tokens.js**: Notion API integration and data fetching
-- **push-tokens.js**: Bidirectional sync (JSON → Notion)
-- **style-dictionary-config.js**: Platform-specific build configurations
-- **build.js**: Build orchestration and file generation
-
-## Troubleshooting
-
-When you run `npm run sync`, the script checks if any tokens in your local `tokens/tokens.json` have different values than what's currently in Notion. If there are conflicts, it warns you before syncing:
+Microcopy tokens are organized by context and component type:
 
 ```
-Found 2 conflicts (local changes != Notion):
-   color.brand.primary:
-     Local: #007bff
-     Notion: #C0FFEE
-   spacing.base:
-     Local: 8px
-     Notion: 8px
-
-Syncing from Notion (Notion values take precedence)
+tokens/copy/en/
+├── button.tokens.json    # Button labels (primary, secondary, submit, delete)
+├── form.tokens.json      # Form labels, placeholders, hints
+├── error.tokens.json     # Validation and system error messages
+└── feedback.tokens.json  # Success, loading, empty state messages
 ```
 
-**Important:** Notion is always the source of truth. If you've edited tokens locally and they differ from Notion, the Notion values will override your local changes. If you want to keep local edits, push them back to Notion first with `npm run push`.
-
-## Token Architecture
-
-Your Notion tokens are transformed into a nested structure. For example:
+### Example Token
 
 ```json
 {
-  "color": {
-    "brand": {
-      "primary": {
-        "$value": "#007bff",
-        "$type": "color",
-        "$description": "Primary brand color",
-        "$extensions": {
-          "com.notion": {
-            "status": "Approved",
-            "category": "brand",
-            "notionId": "abc123...",
-            "lastSynced": "2026-02-09T16:21:01.600Z"
+  "copy": {
+    "button": {
+      "submit": {
+        "label": {
+          "$value": "Submit",
+          "$type": "string",
+          "$description": "Primary form submission button",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": {
+              "enabled": true,
+              "category": "button"
+            }
           }
         }
       }
@@ -215,84 +71,254 @@ Your Notion tokens are transformed into a nested structure. For example:
 }
 ```
 
-The `$extensions` field preserves Notion metadata for:
-- Audit trails (when was it synced?)
-- Approval status tracking
-- Linking back to the Notion page
-- Debugging and documentation
+The `com.alwaystwisted.microcopy` extension identifies this as a microcopy token, allowing the build process to filter and generate these separately from visual design tokens.
 
-## Troubleshooting
+## Generated Output
 
-### "Could not find database with ID"
+Running `npm run build` generates `build/js/microcopy.js`:
 
-**Cause:** The integration doesn't have access to the database, or you used the wrong ID.
-
-**Solution:**
-1. Make sure you added the integration to the database's **Connections** (Step 5 above)
-2. Double-check your database ID—get it from the URL before the `?v=`
-3. Make sure you copied the integration token correctly
-
-### "Provided ID is a page, not a database"
-
-**Cause:** You copied the ID of a page that *contains* the database, not the database itself.
-
-**Solution:**
-1. Open the actual database/table view (not the parent page)
-2. Copy the ID from that URL
-
-### No tokens appear in generated files
-
-**Cause:** Tokens don't have "Approved" status, or they have validation errors.
-
-**Solution:**
-1. Check that your tokens in Notion have `Status = "Approved"`
-2. Check the terminal output for validation warnings
-3. Verify your Token Path matches the expected format (`color.brand.primary`, etc.)
-
-### "Cannot find module '@notionhq/client'"
-
-**Cause:** Dependencies not installed.
-
-**Solution:**
-```bash
-npm install
+```javascript
+export const microcopy = {
+  button: {
+    primary: { label: "Continue" },
+    secondary: { label: "Cancel" },
+    submit: { label: "Submit" },
+    delete: { label: "Delete", confirm: "Are you sure you want to delete this item?" }
+  },
+  form: {
+    input: {
+      email: {
+        label: "Email address",
+        placeholder: "you@example.com",
+        hint: "We'll never share your email with anyone else"
+      },
+      password: {
+        label: "Password",
+        placeholder: "Enter your password",
+        hint: "Must be at least 8 characters"
+      }
+    }
+  },
+  error: {
+    validation: {
+      required: "This field is required",
+      email: { invalid: "Please enter a valid email address" },
+      password: {
+        tooShort: "Password must be at least 8 characters",
+        mismatch: "Passwords do not match"
+      }
+    },
+    system: {
+      generic: "Something went wrong. Please try again.",
+      network: "Unable to connect. Please check your internet connection."
+    }
+  },
+  feedback: {
+    success: {
+      save: "Your changes have been saved",
+      delete: "Item deleted successfully"
+    },
+    loading: {
+      default: "Loading...",
+      saving: "Saving your changes..."
+    },
+    emptyState: {
+      noResults: "No results found",
+      noItems: "You don't have any items yet"
+    }
+  }
+};
 ```
+
+## Usage Examples
+
+### React Component
+
+```jsx
+import { microcopy } from './build/js/microcopy.js';
+
+function SignUpForm() {
+  return (
+    <form>
+      <label htmlFor="email">
+        {microcopy.form.input.email.label}
+      </label>
+      <input
+        id="email"
+        type="email"
+        placeholder={microcopy.form.input.email.placeholder}
+        aria-describedby="email-hint"
+      />
+      <small id="email-hint">
+        {microcopy.form.input.email.hint}
+      </small>
+      
+      <button type="submit">
+        {microcopy.button.submit.label}
+      </button>
+    </form>
+  );
+}
+```
+
+### Form Validation with Tokens
+
+```javascript
+import { microcopy } from './build/js/microcopy.js';
+
+class FormValidator {
+  validateEmail(value) {
+    if (!value) {
+      return {
+        valid: false,
+        message: microcopy.error.validation.required
+      };
+    }
+    if (!value.includes('@')) {
+      return {
+        valid: false,
+        message: microcopy.error.validation.email.invalid
+      };
+    }
+    return { valid: true };
+  }
+}
+```
+
+See `examples/` for complete React, vanilla JavaScript, and HTML examples.
+
+## Benefits
+
+### For Copywriters
+- Edit JSON files directly (no code needed)
+- Propose changes via pull requests
+- See all copy at a glance
+- Understand context through grouping and descriptions
+
+### For Developers
+- Clean, semantic references to copy
+- No hardcoded strings scattered throughout components
+- Type-safe access (with TypeScript support)
+- Automatic updates when tokens change
+
+### For Designers
+- Reference same tokens in design tools
+- Ensure design and code stay in sync
+- Participate in copy review process
 
 ## File Structure
 
 ```
 .
-├── fetch-tokens.js              # Notion API integration and data fetching
-├── push-tokens.js               # Bidirectional sync (JSON → Notion)
 ├── build.js                     # Build orchestration
-├── style-dictionary-config.js   # Style Dictionary configuration
-├── .env                         # Notion credentials (keep this private!)
-├── .env.example                 # Template for environment variables
+├── style-dictionary-config.js   # Style Dictionary configuration with microcopy format
 ├── tokens/
-│   └── tokens.json              # Generated token file
+│   ├── tokens.json              # Visual design tokens (colors, spacing, etc.)
+│   └── copy/
+│       └── en/
+│           ├── button.tokens.json    # Button labels
+│           ├── form.tokens.json      # Form field copy
+│           ├── error.tokens.json     # Error messages
+│           └── feedback.tokens.json  # Success, loading, empty states
+├── examples/
+│   ├── SignUpForm.jsx           # React component example
+│   ├── FormValidator.js         # Form validation class
+│   ├── form-controller.js       # Vanilla JavaScript implementation
+│   ├── form-example.html        # HTML demo with styling
+│   └── README.md                # Detailed examples guide
 └── build/
+    ├── js/
+    │   ├── tokens.js            # Visual design tokens (auto-generated)
+    │   └── microcopy.js         # Interface copy tokens (auto-generated)
     ├── css/
     │   └── variables.css        # CSS custom properties
-    ├── scss/
-    │   └── _variables.scss      # Sass variables
-    └── js/
-        └── tokens.js            # JavaScript ES6 module
+    └── scss/
+        └── _variables.scss      # Sass variables
 ```
 
-## Tips
+## Adding More Microcopy
 
-- **Token Path format:** Use dot notation (`color.brand.primary`, not `color/brand/primary`)
-- **Updates:** Run `npm run sync:build` anytime you change tokens in Notion
-- **Status workflow:** Use Status field to control which tokens make it to production
-- **Categories:** Keep your categories consistent for easier organization
-- **Descriptions:** Add meaningful descriptions to help your team understand each token
+Create new token files following the existing pattern:
+
+1. Create a new file in `tokens/copy/en/` (e.g., `navigation.tokens.json`)
+2. Use the same token structure with `$extensions.com.alwaystwisted.microcopy.enabled: true`
+3. Run `npm run build` to regenerate `build/js/microcopy.js`
+
+Example for navigation:
+
+```json
+{
+  "copy": {
+    "navigation": {
+      "menu": {
+        "home": {
+          "$value": "Home",
+          "$extensions": {
+            "com.alwaystwisted.microcopy": { "enabled": true }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+## Multi-Language Support
+
+Organize tokens by language:
+
+```
+tokens/copy/
+├── en/
+│   ├── button.tokens.json
+│   └── form.tokens.json
+├── fr/
+│   ├── button.tokens.json
+│   └── form.tokens.json
+└── de/
+    ├── button.tokens.json
+    └── form.tokens.json
+```
+
+Then update `style-dictionary-config.js` to build each language separately. See the examples and `BRANCH-15-MICROCOPY.md` for details.
+
+## TypeScript Support
+
+To generate TypeScript type definitions for type-safe microcopy access:
+
+1. Register a `typescript/microcopy-interface` format in `style-dictionary-config.js`
+2. Add TypeScript output to your build config
+3. Import types in your TypeScript files for autocomplete and type checking
+
+See the main article for implementation details.
+
+## Why This Approach Works
+
+**Specification Compliant:** Uses DTCG's `$extensions` field as designed—for tool-specific metadata without breaking the standard.
+
+**Version Control:** Every copy change has git history, commit messages, and code review.
+
+**Collaboration:** Copywriters, designers, and developers work from shared tokens, not scattered files.
+
+**Consistency:** Impossible to have different button labels across your app.
+
+**Maintainability:** Change a message in one place, update everywhere.
+
+**Accessibility:** Centralize aria-labels, descriptions, and alt text.
+
+**Scalability:** Scales from single-language apps to multi-platform, multi-language systems.
 
 ## Next Steps
 
-Once you have this working:
+1. **Expand tokens:** Add more token files for different parts of your interface
+2. **Add languages:** Create language-specific token files for localization
+3. **Type safety:** Generate TypeScript definitions for type-safe access
+4. **Integration:** Use generated `microcopy.js` in your actual application
+5. **Templates:** Generate formats for Nunjucks, Handlebars, or other template languages
 
-- Add more tokens to your Notion database
-- Customize token types to match your design system
-- Set up a scheduled GitHub Action to sync automatically
-- Connect this to your design tool (Figma, Penpot) for bidirectional sync
-- Use the generated files in your actual project
+## Learn More
+
+- Read the full article: "A Design Tokens Workflow (part 15) - Using Design Tokens for Microcopy"
+- See `BRANCH-15-MICROCOPY.md` for branch-specific documentation
+- Check `examples/` for complete implementation examples
+- Review the token structure in `tokens/copy/` for organization patterns
