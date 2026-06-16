@@ -1,9 +1,0 @@
-{
-  "copy": {
-    "$type": "number",
-    "$description": "Microcopy tokens. Type is set here to satisfy spec requirements; use $extensions to identify actual microcopy tokens.",
-    "button": {},
-    "form": {},
-    "error": {}
-  }
-}

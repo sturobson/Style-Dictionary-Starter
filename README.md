@@ -1,23 +1,18 @@
-# Design Tokens Workflow (Part 15) - Using Design Tokens for Microcopy
+# Design Tokens Workflow - Automating Colour Contrast With Design Tokens
 
-This project demonstrates managing interface copy (microcopy) as design tokens using Style Dictionary and the DTCG specification's `$extensions` pattern.
+This project demonstrates automating accessible color contrast calculation at build time using Style Dictionary and the WCAG 2.1 contrast standard.
 
-Microcopy is the small text throughout your interface—button labels, form hints, error messages, empty states, and confirmations. Instead of scattering this copy throughout your code, manage it like you manage colors and spacing: as tokens.
+## What This Does
 
-## What is Microcopy?
+Automatically generates accessible text colour pairs for every background token, validates them against WCAG standards, and fails the build if any combination doesn't meet requirements.
 
-Button labels, form hints, error messages, empty states—these aren't just strings. They're design decisions that directly impact how users understand and trust your product.
+Instead of manually checking contrast ratios, you define your background colors and the system:
+- **Calculates** the best contrasting text colour automatically
+- **Validates** against WCAG AA (4.5:1) and AAA (7:1) standards  
+- **Generates** CSS variables for text-aa and text-aaa pairs
+- **Fails the build** if any combination fails AA compliance
 
-**Before:** Copy scattered across component files, inconsistent across platforms, impossible to collaborate on.
-
-**After:** Single source of truth, version control, team collaboration, multi-platform consistency.
-
-## Prerequisites
-
-- Node.js (v16+)
-- Basic knowledge of design tokens and JSON
-
-## Setup
+## Quick Start
 
 ### 1. Install Dependencies
 
@@ -28,26 +23,193 @@ npm install
 ### 2. Build the Tokens
 
 ```bash
-npm run build
+npm run build:tokens
 ```
 
 This generates:
-- `build/js/tokens.js` - Visual design tokens (colors, spacing, typography, etc.)
-- `build/js/microcopy.js` - Interface copy tokens (button labels, messages, hints, etc.)
+- `build/css/variables.css` - CSS custom properties with auto-generated text colors
+- `build/json/contrast-map.json` - Machine-readable contrast data and validation
+
+### 3. Watch for Changes (Development)
+
+```bash
+npm run watch:tokens
+```
 
 ## Token Structure
 
-Microcopy tokens are organized by context and component type:
+Color tokens are organized into base and semantic layers:
 
 ```
-tokens/copy/en/
-├── button.tokens.json    # Button labels (primary, secondary, submit, delete)
-├── form.tokens.json      # Form labels, placeholders, hints
-├── error.tokens.json     # Validation and system error messages
-└── feedback.tokens.json  # Success, loading, empty state messages
+tokens/color/
+├── base.json       # Foundational brand and neutral colors
+└── semantic.json   # Component-level colors (buttons, surfaces, etc.)
 ```
 
-### Example Token
+### Base Colors (base.json)
+
+```json
+{
+  "color": {
+    "brand": {
+      "primary": { "value": "#407ac2", "type": "color" },
+      "secondary": { "value": "#e862e5", "type": "color" }
+    },
+    "neutral": {
+      "white": { "value": "#ffffff", "type": "color" },
+      "black": { "value": "#1a1a1a", "type": "color" },
+      "grey": {
+        "50": { "value": "#f9fafb", "type": "color" },
+        "100": { "value": "#f3f4f6", "type": "color" }
+      }
+    }
+  }
+}
+```
+
+### Semantic Colors (semantic.json)
+
+Semantic tokens follow a naming convention:
+- `{component}-{variant}-background` for backgrounds
+- Text pairs (`-text-aa` and `-text-aaa`) are auto-generated
+
+```json
+{
+  "button": {
+    "primary": {
+      "background": { 
+        "value": "{color.brand.primary}",
+        "type": "color"
+      }
+    }
+  }
+}
+```
+
+## Build Output
+
+### CSS Variables with Contrast
+
+Generated CSS includes auto-generated text color pairs:
+
+```css
+:root {
+  --button-primary-background: #407ac2;
+  --button-primary-text-aa: #000000; /* 4.78:1 */
+  --button-primary-text-aaa: #000000; /* 4.78:1 */
+  /* ⚠️ button-primary does not meet AAA standards (requires 7:1) */
+}
+```
+
+### JSON Contrast Map
+
+Machine-readable validation data:
+
+```json
+{
+  "button-primary-background": {
+    "value": "#407ac2",
+    "textAA": "#000000",
+    "textAAA": "#000000",
+    "ratioAA": 4.78,
+    "ratioAAA": 4.78,
+    "passesAA": true,
+    "passesAAA": false
+  }
+}
+```
+
+## Build Validation
+
+The build validates all colors automatically:
+
+```bash
+✅ 7 color combinations pass WCAG AA
+⚠️  2 color combinations don't meet WCAG AAA
+✅ All color combinations meet WCAG AA standards
+```
+
+### Build Fails On
+
+If any color fails WCAG AA (4.5:1), the build exits with error code 1:
+
+```bash
+❌ Build failed: 1 color combinations FAIL WCAG AA
+
+   button-warning-background
+   └─ 1.89:1 (requires 4.5:1 for AA)
+```
+
+## Project Structure
+
+```
+.
+├── tokens/
+│   └── color/
+│       ├── base.json        # Brand and neutral colors
+│       └── semantic.json    # Component colors
+├── lib/
+│   ├── contrast-helpers.js      # Utility functions
+│   ├── transforms/
+│   │   └── contrast.js          # Style Dictionary transform
+│   ├── formats/
+│   │   ├── css-with-contrast.js # CSS format
+│   │   └── json-contrast-map.js # JSON format
+│   └── actions/
+│       └── validate-contrast.js # Build validation
+├── build/
+│   ├── css/variables.css        # Generated CSS
+│   └── json/contrast-map.json   # Generated JSON
+└── build.js                 # Build configuration
+```
+
+## Adding New Colors
+
+To add a new button variant:
+
+1. Add it to `tokens/color/semantic.json`:
+
+```json
+{
+  "button": {
+    "success": {
+      "background": {
+        "value": "#10b981",
+        "type": "color"
+      }
+    }
+  }
+}
+```
+
+2. Run the build:
+
+```bash
+npm run build:tokens
+```
+
+The system automatically:
+- Calculates contrast ratios
+- Generates AA and AAA text pairs
+- Validates against WCAG standards
+- Fails if AA isn't met
+
+## Why colorjs.io?
+
+The project uses `colorjs.io` for contrast calculations because it:
+- Supports WCAG 2.1 contrast (current standard)
+- Works with modern color spaces (OKLCH, Display P3)
+- Is actively maintained and accurate
+
+## Dependencies
+
+- `style-dictionary` (^4.1.4) - Design token build system
+- `colorjs.io` (^0.5.0) - WCAG contrast calculations
+- `nodemon` (^3.0.0) - File watch for development
+
+## License
+
+MIT
 
 ```json
 {

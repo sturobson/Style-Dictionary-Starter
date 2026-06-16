@@ -1,15 +1,13 @@
 {
-  "name": "notion-style-dictionary-tokens",
+  "name": "style-dictionary-tokens",
   "version": "1.0.0",
   "type": "module",
-  "description": "Sync design tokens from Notion with Style Dictionary",
+  "description": "Generate Perfect Colour Contrast Foreground Colours",
   "main": "build.js",
   "scripts": {
-    "sync": "node fetch-tokens.js",
-    "push": "node push-tokens.js",
-    "build": "node build.js",
-    "sync:build": "npm run sync && npm run build",
-    "watch": "nodemon --watch tokens -e json --exec npm run build"
+    "build:tokens": "node build.js",
+    "validate:tokens": "node build.js",
+    "watch:tokens": "nodemon --watch tokens -e json --exec 'npm run build:tokens'"
   },
   "repository": {
     "type": "git",
@@ -17,8 +15,7 @@
   },
   "keywords": [
     "design-tokens",
-    "style-dictionary",
-    "notion"
+    "style-dictionary"
   ],
   "author": "Stuart Robson",
   "license": "MIT",
@@ -27,9 +24,8 @@
   },
   "homepage": "https://github.com/sturobson/Style-Dictionary-Starter#readme",
   "devDependencies": {
-    "@notionhq/client": "^2.2.15",
-    "style-dictionary": "^4.1.4",
+    "colorjs.io": "^0.5.2",
     "nodemon": "^3.0.0",
-    "dotenv": "^16.3.1"
+    "style-dictionary": "^4.1.4"
   }
 }

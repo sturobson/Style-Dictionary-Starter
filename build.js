@@ -1,80 +1,64 @@
 import StyleDictionary from 'style-dictionary';
+import contrastTransform from './lib/transforms/contrast.js';
+import cssWithContrastFormat from './lib/formats/css-with-contrast.js';
+import jsonContrastMapFormat from './lib/formats/json-contrast-map.js';
+import validateContrastAction from './lib/actions/validate-contrast.js';
 
-// Filter tokens to get only microcopy tokens based on extensions
-const getMicrocopyTokens = (dictionary) => {
-  return dictionary.allTokens.filter(token => {
-    return token.$extensions &&
-      token.$extensions['com.alwaystwisted.microcopy'] &&
-      token.$extensions['com.alwaystwisted.microcopy'].enabled;
-  });
+// Contrast system configuration
+// Customize these to match your token naming conventions
+export const contrastConfig = {
+  backgroundTokenName: 'background',  // e.g., 'bg', 'surface', 'pane', 'background'
+  foregroundTokenName: 'foreground'   // e.g., 'text', 'color', 'foreground'
 };
 
-// Build a nested object from flat token paths
-const buildNestedObject = (tokens) => {
-  const result = {};
+// Register custom transform
+StyleDictionary.registerTransform(contrastTransform);
 
-  tokens.forEach(token => {
-    const path = token.path.slice(1); // Skip 'copy' prefix from path
-    let current = result;
+// Register custom formats
+StyleDictionary.registerFormat(cssWithContrastFormat);
+StyleDictionary.registerFormat(jsonContrastMapFormat);
 
-    path.forEach((key, index) => {
-      if (index === path.length - 1) {
-        current[key] = token.$value;
-      } else {
-        current[key] = current[key] || {};
-        current = current[key];
-      }
-    });
-  });
+// Register validation action
+StyleDictionary.registerAction(validateContrastAction);
 
-  return result;
-};
-
-// Register custom format for JavaScript ES6 export
-StyleDictionary.registerFormat({
-  name: 'javascript/microcopy',
-  format: function ({ dictionary }) {
-    const nested = buildNestedObject(getMicrocopyTokens(dictionary));
-    return `export const microcopy = ${JSON.stringify(nested, null, 2)};`;
-  }
-});
-
-// Register custom format for JSON output
-StyleDictionary.registerFormat({
-  name: 'json/microcopy',
-  format: function ({ dictionary }) {
-    const nested = buildNestedObject(getMicrocopyTokens(dictionary));
-    return JSON.stringify(nested, null, 2);
-  }
-});
-
-// List of supported languages
-const languages = ['en', 'fr'];
-
-// Build microcopy for each language
-languages.forEach(language => {
-  const config = {
-    source: [`tokens/copy/${language}/**/*.tokens.json`],
-    platforms: {
-      js: {
-        transformGroup: 'js',
-        buildPath: `build/js/${language}/`,
-        files: [{
-          destination: 'microcopy.js',
-          format: 'javascript/microcopy'
-        }]
-      },
-      json: {
-        transformGroup: 'js',
-        buildPath: `build/json/${language}/`,
-        files: [{
-          destination: 'microcopy.json',
-          format: 'json/microcopy'
-        }]
-      }
+// Configure and build
+const sd = new StyleDictionary({
+  source: ['tokens/**/*.json'],
+  platforms: {
+    css: {
+      transformGroup: 'css',
+      // Add our custom transform
+      transforms: ['attribute/cti', 'name/kebab', 'color/add-contrast'],
+      buildPath: 'build/css/',
+      files: [
+        {
+          destination: 'variables.css',
+          format: 'css/variables-with-contrast'
+        }
+      ],
+      // Run validation after build
+      actions: ['validate-contrast']
+    },
+    json: {
+      transformGroup: 'js',
+      transforms: ['attribute/cti', 'name/kebab', 'color/add-contrast'],
+      buildPath: 'build/json/',
+      files: [
+        {
+          destination: 'contrast-map.json',
+          format: 'json/contrast-map'
+        }
+      ]
     }
-  };
-
-  const sd = new StyleDictionary(config);
-  sd.buildAllPlatforms();
+  }
 });
+
+console.log('🎨 Building design tokens...\n');
+
+try {
+  await sd.buildAllPlatforms();
+  console.log('✅ Build complete!\n');
+} catch (error) {
+  console.error('❌ Build failed:', error.message);
+  process.exit(1);
+}
