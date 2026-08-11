@@ -1,0 +1,12 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --button-primary-background: var(--color-semantic-primary-default); /* Primary button background */
+  --button-primary-foreground: var(--color-semantic-inverse); /* Primary button text color */
+  --button-secondary-background: var(--color-semantic-secondary-default); /* Secondary button background */
+  --button-secondary-foreground: var(--color-semantic-text-primary); /* Secondary button text color */
+  --button-disabled-background: var(--color-semantic-disabled-bg); /* Disabled button background */
+  --button-disabled-foreground: var(--color-semantic-disabled-text); /* Disabled button text color */
+}

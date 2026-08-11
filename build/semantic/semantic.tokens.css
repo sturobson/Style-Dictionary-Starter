@@ -1,0 +1,15 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --color-semantic-primary-default: var(--color-brand-primary); /* Primary semantic color for main actions and highlights */
+  --color-semantic-secondary-default: var(--color-brand-secondary); /* Secondary semantic color for alternate actions */
+  --color-semantic-inverse: var(--color-neutral-white); /* Inverse color for contrast against primary backgrounds */
+  --color-semantic-text-primary: var(--color-neutral-black); /* Primary text color */
+  --color-semantic-text-secondary: var(--color-neutral-grey-700); /* Secondary text color for less important content */
+  --color-semantic-neutral-light: var(--color-neutral-grey-100); /* Light neutral background */
+  --color-semantic-neutral-border: var(--color-neutral-grey-200); /* Border color */
+  --color-semantic-disabled-bg: var(--color-neutral-grey-200); /* Disabled state background */
+  --color-semantic-disabled-text: var(--color-neutral-grey-700); /* Disabled state text color */
+}
