@@ -1,0 +1,11 @@
+{
+  "text": {
+    "body": {
+      "background": {
+        "$value": "{color.neutral.white}",
+        "$type": "color",
+        "$description": "Default text body background"
+      }
+    }
+  }
+}

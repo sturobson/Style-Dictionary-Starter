@@ -1,0 +1,20 @@
+{
+  "card": {
+    "surface": {
+      "default": {
+        "background": {
+          "$value": "{color.neutral.white}",
+          "$type": "color",
+          "$description": "Default card background"
+        }
+      },
+      "elevated": {
+        "background": {
+          "$value": "{color.neutral.grey.50}",
+          "$type": "color",
+          "$description": "Elevated card background"
+        }
+      }
+    }
+  }
+}

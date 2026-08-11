@@ -1,0 +1,61 @@
+{
+  "color": {
+    "semantic": {
+      "primary": {
+        "default": {
+          "$value": "{color.brand.primary}",
+          "$type": "color",
+          "$description": "Primary semantic color for main actions and highlights"
+        }
+      },
+      "secondary": {
+        "default": {
+          "$value": "{color.brand.secondary}",
+          "$type": "color",
+          "$description": "Secondary semantic color for alternate actions"
+        }
+      },
+      "inverse": {
+        "$value": "{color.neutral.white}",
+        "$type": "color",
+        "$description": "Inverse color for contrast against primary backgrounds"
+      },
+      "text": {
+        "primary": {
+          "$value": "{color.neutral.black}",
+          "$type": "color",
+          "$description": "Primary text color"
+        },
+        "secondary": {
+          "$value": "{color.neutral.grey.700}",
+          "$type": "color",
+          "$description": "Secondary text color for less important content"
+        }
+      },
+      "neutral": {
+        "light": {
+          "$value": "{color.neutral.grey.100}",
+          "$type": "color",
+          "$description": "Light neutral background"
+        },
+        "border": {
+          "$value": "{color.neutral.grey.200}",
+          "$type": "color",
+          "$description": "Border color"
+        }
+      },
+      "disabled": {
+        "bg": {
+          "$value": "{color.neutral.grey.200}",
+          "$type": "color",
+          "$description": "Disabled state background"
+        },
+        "text": {
+          "$value": "{color.neutral.grey.700}",
+          "$type": "color",
+          "$description": "Disabled state text color"
+        }
+      }
+    }
+  }
+}

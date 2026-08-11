@@ -1,0 +1,40 @@
+{
+  "button": {
+    "primary": {
+      "background": {
+        "$value": "{color.semantic.primary.default}",
+        "$type": "color",
+        "$description": "Primary button background"
+      },
+      "foreground": {
+        "$value": "{color.semantic.inverse}",
+        "$type": "color",
+        "$description": "Primary button text color"
+      }
+    },
+    "secondary": {
+      "background": {
+        "$value": "{color.semantic.secondary.default}",
+        "$type": "color",
+        "$description": "Secondary button background"
+      },
+      "foreground": {
+        "$value": "{color.semantic.text.primary}",
+        "$type": "color",
+        "$description": "Secondary button text color"
+      }
+    },
+    "disabled": {
+      "background": {
+        "$value": "{color.semantic.disabled.bg}",
+        "$type": "color",
+        "$description": "Disabled button background"
+      },
+      "foreground": {
+        "$value": "{color.semantic.disabled.text}",
+        "$type": "color",
+        "$description": "Disabled button text color"
+      }
+    }
+  }
+}
